@@ -1,0 +1,83 @@
+@import "tailwindcss";
+@config "../../tailwind.config.ts";
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    scroll-padding-top: 88px;
+  }
+
+  body {
+    @apply bg-canvas font-sans text-base text-body antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display text-ink;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent;
+  }
+
+  ::selection {
+    @apply bg-tint-blue text-ink;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+@layer components {
+  .heading-1 {
+    @apply font-display text-h1-sm font-bold text-ink md:text-h1-md lg:text-h1;
+  }
+  .heading-2 {
+    @apply font-display text-h2-sm font-bold text-ink md:text-h2-md lg:text-h2;
+  }
+  .heading-3 {
+    @apply font-display text-h3 font-semibold text-ink;
+  }
+  .eyebrow {
+    @apply text-sm font-semibold tracking-wide text-accent uppercase;
+  }
+  .card {
+    @apply rounded-card border border-line bg-card;
+  }
+}
+
+/* Fade / slide in on scroll (see components/ui/Reveal.tsx) */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+.reveal[data-visible="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
