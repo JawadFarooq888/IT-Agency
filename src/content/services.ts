@@ -633,4 +633,4 @@ export function getService(slug: string): Service | undefined {
 }
 
 /** Options for the quote form "Service needed" dropdown */
-export const serviceOptions = [...services.map((s) => s.title), "Other"] as const;
+export const serviceOptions = [...services.map((s) => s.title), "Other"] as unknown as [string, ...string[]];

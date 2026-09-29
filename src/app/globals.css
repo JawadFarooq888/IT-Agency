@@ -51,6 +51,62 @@
   }
 }
 
+/* Long-form article text (blog posts, legal pages) */
+@layer components {
+  .prose {
+    @apply max-w-[720px] text-[17px] leading-[1.75] text-body md:text-lg;
+  }
+  .prose > * + * {
+    @apply mt-5;
+  }
+  .prose h2 {
+    @apply mt-12 scroll-mt-24 font-display text-[26px] leading-tight font-bold tracking-tight text-ink md:text-[30px];
+  }
+  .prose h3 {
+    @apply mt-9 scroll-mt-24 font-display text-h3 font-semibold text-ink;
+  }
+  .prose h4 {
+    @apply mt-8 font-semibold text-ink;
+  }
+  .prose a {
+    @apply font-medium text-accent underline underline-offset-4 hover:text-accent-hover;
+  }
+  .prose strong {
+    @apply font-semibold text-ink;
+  }
+  .prose ul {
+    @apply list-disc space-y-2 pl-6 marker:text-accent;
+  }
+  .prose ol {
+    @apply list-decimal space-y-2 pl-6 marker:font-semibold marker:text-ink;
+  }
+  .prose blockquote {
+    @apply border-l-4 border-accent pl-5 text-ink italic;
+  }
+  .prose code {
+    @apply rounded bg-card px-1.5 py-0.5 text-[0.9em] text-ink;
+  }
+  .prose pre {
+    @apply overflow-x-auto rounded-card-sm bg-ink p-5 text-sm text-white;
+  }
+  .prose pre code {
+    @apply bg-transparent p-0 text-white;
+  }
+  .prose img {
+    @apply rounded-card-sm border border-line;
+  }
+  .prose hr {
+    @apply my-10 border-line;
+  }
+  .prose table {
+    @apply w-full border-collapse text-left text-base;
+  }
+  .prose th,
+  .prose td {
+    @apply border border-line px-3 py-2;
+  }
+}
+
 /* Fade / slide in on scroll (see components/ui/Reveal.tsx) */
 .reveal {
   opacity: 0;
