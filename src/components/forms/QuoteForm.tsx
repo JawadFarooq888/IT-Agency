@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useId, useRef, useState } from "react";
-import { useForm, type FieldError } from "react-hook-form";
+import { useForm, useWatch, type FieldError } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertCircle, CheckCircle2, Loader2, Paperclip, Send, X } from "lucide-react";
 import { upload } from "@vercel/blob/client";
@@ -105,7 +105,7 @@ export function QuoteForm({ defaultService }: { defaultService?: string }) {
   const {
     register,
     handleSubmit,
-    watch,
+    control,
     setValue,
     setError,
     reset,
@@ -125,9 +125,9 @@ export function QuoteForm({ defaultService }: { defaultService?: string }) {
     },
   });
 
-  const details = watch("details") ?? "";
-  const budget = watch("budget");
-  const timeline = watch("timeline");
+  const details = useWatch({ control, name: "details" }) ?? "";
+  const budget = useWatch({ control, name: "budget" });
+  const timeline = useWatch({ control, name: "timeline" });
   const busy = status === "uploading" || status === "sending";
 
   function onFileChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -246,7 +246,7 @@ export function QuoteForm({ defaultService }: { defaultService?: string }) {
   const err = (k: string) => `${uid}-${k}-error`;
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate aria-describedby={formError ? `${uid}-form-error` : undefined}>
+    <form onSubmit={(e) => void handleSubmit(onSubmit)(e)} noValidate aria-describedby={formError ? `${uid}-form-error` : undefined}>
       <h3 className="heading-3 text-2xl">Get a free quote</h3>
       <p className="mt-1.5 text-[15px] text-muted">
         Fields marked <span aria-hidden="true">*</span>

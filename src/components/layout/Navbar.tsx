@@ -22,8 +22,13 @@ const links = [
 export function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
+  // Menus remember the page they were opened on, so they close on navigation
+  const [dropdownFor, setDropdownFor] = useState<string | null>(null);
+  const [mobileFor, setMobileFor] = useState<string | null>(null);
+  const dropdownOpen = dropdownFor === pathname;
+  const mobileOpen = mobileFor === pathname;
+  const setDropdownOpen = (open: boolean) => setDropdownFor(open ? pathname : null);
+  const setMobileOpen = (open: boolean) => setMobileFor(open ? pathname : null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const dropdownId = useId();
 
@@ -34,20 +39,14 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close menus on navigation
-  useEffect(() => {
-    setDropdownOpen(false);
-    setMobileOpen(false);
-  }, [pathname]);
-
   // Close dropdown on outside click / Escape
   useEffect(() => {
     if (!dropdownOpen) return;
     const onClick = (e: MouseEvent) => {
-      if (!dropdownRef.current?.contains(e.target as Node)) setDropdownOpen(false);
+      if (!dropdownRef.current?.contains(e.target as Node)) setDropdownFor(null);
     };
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setDropdownOpen(false);
+      if (e.key === "Escape") setDropdownFor(null);
     };
     document.addEventListener("mousedown", onClick);
     document.addEventListener("keydown", onKey);
@@ -83,7 +82,7 @@ export function Navbar() {
                   type="button"
                   aria-expanded={dropdownOpen}
                   aria-controls={dropdownId}
-                  onClick={() => setDropdownOpen((o) => !o)}
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
                   className={cn(
                     "inline-flex min-h-11 items-center gap-1 rounded-lg px-3 hover:text-accent",
                     pathname.startsWith("/services") && "text-accent",

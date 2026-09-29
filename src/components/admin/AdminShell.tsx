@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   BriefcaseBusiness,
   ExternalLink,
@@ -32,9 +32,10 @@ const nav = [
 
 export function AdminShell({ userEmail, children }: { userEmail: string; children: React.ReactNode }) {
   const pathname = usePathname();
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => setOpen(false), [pathname]);
+  // Remember which page the menu was opened on, so it closes on navigation
+  const [openFor, setOpenFor] = useState<string | null>(null);
+  const open = openFor === pathname;
+  const setOpen = (value: boolean) => setOpenFor(value ? pathname : null);
 
   const sidebar = (
     <div className="flex h-full flex-col">
