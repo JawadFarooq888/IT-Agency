@@ -104,7 +104,14 @@ export default async function BlogPostPage(props: PageProps<"/blog/[slug]">) {
         <Container className="py-12 lg:py-16">
           {post.coverImage && (
             <div className="relative mb-12 aspect-[16/8] overflow-hidden rounded-card border border-line">
-              <Image src={post.coverImage} alt="" fill priority sizes="(min-width: 1440px) 1248px, 100vw" className="object-cover" />
+              <Image
+                src={post.coverImage}
+                alt=""
+                fill
+                priority
+                sizes="(min-width: 1440px) 1248px, 100vw"
+                className="object-cover"
+              />
             </div>
           )}
           <div className="grid gap-12 lg:grid-cols-[240px_minmax(0,1fr)] xl:grid-cols-[260px_minmax(0,720px)] xl:gap-20">
@@ -130,11 +137,14 @@ export default async function BlogPostPage(props: PageProps<"/blog/[slug]">) {
             <div className={toc.length === 0 ? "lg:col-start-2" : undefined}>
               <div className="prose" dangerouslySetInnerHTML={{ __html: html }} />
 
-              <aside aria-label="Get help with your project" className="mt-14 rounded-card bg-ink p-8 md:p-10">
+              <aside
+                aria-label="Get help with your project"
+                className="mt-14 rounded-card bg-ink p-8 md:p-10"
+              >
                 <h2 className="heading-3 text-2xl text-white">Need help with your project?</h2>
                 <p className="mt-3 text-white/75">
-                  Tell us what you want to build. We will reply within 24 hours with ideas and a free,
-                  fixed price quote.
+                  Tell us what you want to build. We will reply within 24 hours with ideas and a free, fixed
+                  price quote.
                 </p>
                 <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                   <Link href="/contact#quote" className={buttonClasses("light", "md")}>

@@ -1,6 +1,7 @@
 import { getSiteSettings } from "@/lib/settings";
 import { SettingsProvider } from "@/components/providers/SettingsProvider";
 import { AttributionCapture } from "@/components/providers/AttributionCapture";
+import { Analytics } from "@/components/seo/Analytics";
 import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
 import { FloatingWhatsApp } from "./FloatingWhatsApp";
@@ -21,6 +22,7 @@ export async function SiteChrome({ children }: { children: React.ReactNode }) {
       <Footer settings={settings} />
       <FloatingWhatsApp />
       <AttributionCapture />
+      <Analytics />
     </SettingsProvider>
   );
 }

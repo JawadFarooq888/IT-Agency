@@ -15,7 +15,10 @@ export async function loginAction(_prev: FormState, formData: FormData): Promise
     return { ok: true };
   } catch (error) {
     if (error instanceof AuthError) {
-      if (error.type === "CredentialsSignin" && (error as AuthError & { code?: string }).code === "rate_limited") {
+      if (
+        error.type === "CredentialsSignin" &&
+        (error as AuthError & { code?: string }).code === "rate_limited"
+      ) {
         return { error: "Too many login attempts. Please wait 15 minutes and try again." };
       }
       return { error: "Wrong email or password." };

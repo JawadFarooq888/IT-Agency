@@ -1,4 +1,15 @@
-import { Body, Button, Container, Head, Heading, Hr, Html, Preview, Section, Text } from "@react-email/components";
+import {
+  Body,
+  Button,
+  Container,
+  Head,
+  Heading,
+  Hr,
+  Html,
+  Preview,
+  Section,
+  Text,
+} from "@react-email/components";
 import { button, colors, container, heading, main, small, text } from "./styles";
 
 export type AutoReplyData = {
@@ -26,8 +37,8 @@ export function ClientAutoReplyEmail(d: AutoReplyData) {
             Thanks, {d.firstName}. We will reply within 24 hours.
           </Heading>
           <Text style={text}>
-            We have received your request about <strong>{d.service}</strong>. A member of our team
-            will read it carefully and get back to you with questions or a free, fixed price quote.
+            We have received your request about <strong>{d.service}</strong>. A member of our team will read
+            it carefully and get back to you with questions or a free, fixed price quote.
           </Text>
           <Text style={text}>Need an answer sooner? Message us on WhatsApp or book a short call.</Text>
           <Section style={{ margin: "8px 0 8px" }}>
@@ -40,8 +51,8 @@ export function ClientAutoReplyEmail(d: AutoReplyData) {
           </Section>
           <Hr style={{ borderColor: colors.line, margin: "28px 0 16px" }} />
           <Text style={small}>
-            You are receiving this email because you sent a request on {d.siteUrl}. If this was not
-            you, you can ignore this message.
+            You are receiving this email because you sent a request on {d.siteUrl}. If this was not you, you
+            can ignore this message.
           </Text>
         </Container>
       </Body>

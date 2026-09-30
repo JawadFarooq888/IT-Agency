@@ -57,7 +57,8 @@ export async function submitQuote(rawValues: unknown, rawMeta: unknown): Promise
     if (!allowed) {
       return {
         ok: false,
-        error: "You have sent several requests in a short time. Please wait an hour or message us on WhatsApp.",
+        error:
+          "You have sent several requests in a short time. Please wait an hour or message us on WhatsApp.",
       };
     }
   } catch (e) {

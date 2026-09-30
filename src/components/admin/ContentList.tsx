@@ -7,9 +7,15 @@ import { cn } from "@/lib/utils";
 
 type Entity = Parameters<typeof moveItem>[0];
 
-export type ContentRow = { id: string; title: string; subtitle?: string; badge?: { label: string; muted?: boolean } };
+export type ContentRow = {
+  id: string;
+  title: string;
+  subtitle?: string;
+  badge?: { label: string; muted?: boolean };
+};
 
-const iconBtn = "grid size-11 place-items-center rounded-lg text-muted hover:bg-canvas hover:text-ink disabled:opacity-30 disabled:hover:bg-transparent";
+const iconBtn =
+  "grid size-11 place-items-center rounded-lg text-muted hover:bg-canvas hover:text-ink disabled:opacity-30 disabled:hover:bg-transparent";
 
 /** List with move up / down, edit and delete. Order here is the order on the website. */
 export function ContentList({
@@ -33,12 +39,22 @@ export function ContentList({
           {reorder && (
             <div className="flex shrink-0">
               <form action={moveItem.bind(null, entity, r.id, "up")}>
-                <button type="submit" disabled={i === 0} aria-label={`Move "${r.title}" up`} className={iconBtn}>
+                <button
+                  type="submit"
+                  disabled={i === 0}
+                  aria-label={`Move "${r.title}" up`}
+                  className={iconBtn}
+                >
                   <ArrowUp aria-hidden="true" className="size-4" />
                 </button>
               </form>
               <form action={moveItem.bind(null, entity, r.id, "down")}>
-                <button type="submit" disabled={i === rows.length - 1} aria-label={`Move "${r.title}" down`} className={iconBtn}>
+                <button
+                  type="submit"
+                  disabled={i === rows.length - 1}
+                  aria-label={`Move "${r.title}" down`}
+                  className={iconBtn}
+                >
                   <ArrowDown aria-hidden="true" className="size-4" />
                 </button>
               </form>
@@ -62,7 +78,11 @@ export function ContentList({
             <Pencil aria-hidden="true" className="size-4" />
           </Link>
           <form action={deleteItem.bind(null, entity, r.id)}>
-            <ConfirmSubmit message={`Delete "${r.title}"? This cannot be undone.`} aria-label={`Delete "${r.title}"`} className={cn(iconBtn, "hover:text-red-700")}>
+            <ConfirmSubmit
+              message={`Delete "${r.title}"? This cannot be undone.`}
+              aria-label={`Delete "${r.title}"`}
+              className={cn(iconBtn, "hover:text-red-700")}
+            >
               <Trash2 aria-hidden="true" className="size-4" />
             </ConfirmSubmit>
           </form>

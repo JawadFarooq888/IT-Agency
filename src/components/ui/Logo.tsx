@@ -20,10 +20,7 @@ export function Logo({ className, light = false }: { className?: string; light?:
         {site.name.charAt(0)}
       </span>
       <span
-        className={cn(
-          "font-display text-xl font-bold tracking-tight",
-          light ? "text-white" : "text-ink",
-        )}
+        className={cn("font-display text-xl font-bold tracking-tight", light ? "text-white" : "text-ink")}
       >
         {site.name}
         <span className="text-accent">.</span>

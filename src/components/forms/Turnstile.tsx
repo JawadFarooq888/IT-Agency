@@ -35,7 +35,8 @@ function loadTurnstile(): Promise<TurnstileApi> {
     script.src = SCRIPT_SRC;
     script.async = true;
     script.defer = true;
-    script.onload = () => (window.turnstile ? resolve(window.turnstile) : reject(new Error("Turnstile missing")));
+    script.onload = () =>
+      window.turnstile ? resolve(window.turnstile) : reject(new Error("Turnstile missing"));
     script.onerror = () => {
       loader = null;
       reject(new Error("Could not load Turnstile"));
@@ -51,7 +52,13 @@ export const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? ""
  * Cloudflare Turnstile widget. Renders nothing when no site key is configured
  * (local development). Change `resetKey` to get a fresh token after a submit.
  */
-export function Turnstile({ onToken, resetKey }: { onToken: (token: string | null) => void; resetKey: number }) {
+export function Turnstile({
+  onToken,
+  resetKey,
+}: {
+  onToken: (token: string | null) => void;
+  resetKey: number;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const onTokenRef = useRef(onToken);
 

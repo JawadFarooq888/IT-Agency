@@ -124,7 +124,11 @@ const portfolioSchema = z.object({
   published: z.boolean(),
 });
 
-export async function savePortfolioItem(id: string | null, _prev: FormState, formData: FormData): Promise<FormState> {
+export async function savePortfolioItem(
+  id: string | null,
+  _prev: FormState,
+  formData: FormData,
+): Promise<FormState> {
   await requireAdmin();
   const parsed = portfolioSchema.safeParse({
     title: str(formData.get("title")),
@@ -147,7 +151,8 @@ export async function savePortfolioItem(id: string | null, _prev: FormState, for
     testimonialRole: str(formData.get("testimonialRole")),
     published: formData.get("published") === "on",
   });
-  if (!parsed.success) return { error: "Please fix the highlighted fields.", fieldErrors: zodFieldErrors(parsed.error) };
+  if (!parsed.success)
+    return { error: "Please fix the highlighted fields.", fieldErrors: zodFieldErrors(parsed.error) };
 
   const d = parsed.data;
   const data = {
@@ -161,7 +166,8 @@ export async function savePortfolioItem(id: string | null, _prev: FormState, for
     if (id) await db.portfolioItem.update({ where: { id }, data });
     else await db.portfolioItem.create({ data: { ...data, sortOrder: await nextSortOrder("portfolio") } });
   } catch (e) {
-    if (isUniqueError(e)) return { error: "That slug is already used.", fieldErrors: { slug: "Already used." } };
+    if (isUniqueError(e))
+      return { error: "That slug is already used.", fieldErrors: { slug: "Already used." } };
     throw e;
   }
   revalidateSite();
@@ -179,7 +185,11 @@ const testimonialSchema = z.object({
   published: z.boolean(),
 });
 
-export async function saveTestimonial(id: string | null, _prev: FormState, formData: FormData): Promise<FormState> {
+export async function saveTestimonial(
+  id: string | null,
+  _prev: FormState,
+  formData: FormData,
+): Promise<FormState> {
   await requireAdmin();
   const parsed = testimonialSchema.safeParse({
     name: str(formData.get("name")),
@@ -189,9 +199,11 @@ export async function saveTestimonial(id: string | null, _prev: FormState, formD
     quote: str(formData.get("quote")),
     published: formData.get("published") === "on",
   });
-  if (!parsed.success) return { error: "Please fix the highlighted fields.", fieldErrors: zodFieldErrors(parsed.error) };
+  if (!parsed.success)
+    return { error: "Please fix the highlighted fields.", fieldErrors: zodFieldErrors(parsed.error) };
   if (id) await db.testimonial.update({ where: { id }, data: parsed.data });
-  else await db.testimonial.create({ data: { ...parsed.data, sortOrder: await nextSortOrder("testimonial") } });
+  else
+    await db.testimonial.create({ data: { ...parsed.data, sortOrder: await nextSortOrder("testimonial") } });
   revalidateSite();
   redirect("/admin/testimonials");
 }
@@ -211,7 +223,8 @@ export async function saveFaq(id: string | null, _prev: FormState, formData: For
     answer: str(formData.get("answer")),
     published: formData.get("published") === "on",
   });
-  if (!parsed.success) return { error: "Please fix the highlighted fields.", fieldErrors: zodFieldErrors(parsed.error) };
+  if (!parsed.success)
+    return { error: "Please fix the highlighted fields.", fieldErrors: zodFieldErrors(parsed.error) };
   if (id) await db.faq.update({ where: { id }, data: parsed.data });
   else await db.faq.create({ data: { ...parsed.data, sortOrder: await nextSortOrder("faq") } });
   revalidateSite();
@@ -234,7 +247,11 @@ const blogSchema = z.object({
   publishedAt: z.string().max(40),
 });
 
-export async function saveBlogPost(id: string | null, _prev: FormState, formData: FormData): Promise<FormState> {
+export async function saveBlogPost(
+  id: string | null,
+  _prev: FormState,
+  formData: FormData,
+): Promise<FormState> {
   await requireAdmin();
   const parsed = blogSchema.safeParse({
     title: str(formData.get("title")),
@@ -249,7 +266,8 @@ export async function saveBlogPost(id: string | null, _prev: FormState, formData
     status: str(formData.get("status")),
     publishedAt: str(formData.get("publishedAt")),
   });
-  if (!parsed.success) return { error: "Please fix the highlighted fields.", fieldErrors: zodFieldErrors(parsed.error) };
+  if (!parsed.success)
+    return { error: "Please fix the highlighted fields.", fieldErrors: zodFieldErrors(parsed.error) };
   const d = parsed.data;
 
   // Find or create the category by name
@@ -281,7 +299,8 @@ export async function saveBlogPost(id: string | null, _prev: FormState, formData
     if (id) await db.blogPost.update({ where: { id }, data });
     else await db.blogPost.create({ data: { ...data, sortOrder: await nextSortOrder("blog") } });
   } catch (e) {
-    if (isUniqueError(e)) return { error: "That slug is already used.", fieldErrors: { slug: "Already used." } };
+    if (isUniqueError(e))
+      return { error: "That slug is already used.", fieldErrors: { slug: "Already used." } };
     throw e;
   }
   revalidateSite();
@@ -312,7 +331,8 @@ export async function saveSettings(_prev: FormState, formData: FormData): Promis
     },
     countriesLabel: str(formData.get("countriesLabel")),
   });
-  if (!parsed.success) return { error: "Please fix the highlighted fields.", fieldErrors: zodFieldErrors(parsed.error) };
+  if (!parsed.success)
+    return { error: "Please fix the highlighted fields.", fieldErrors: zodFieldErrors(parsed.error) };
   await db.siteSetting.upsert({
     where: { key: "site" },
     update: { value: parsed.data },

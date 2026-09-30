@@ -45,11 +45,7 @@ export function validateAttachment(file: { name: string; size: number; type: str
 
 /** The quote form. Same schema validates in the browser and in the server action. */
 export const quoteFormSchema = z.object({
-  fullName: z
-    .string()
-    .trim()
-    .min(2, "Please enter your full name.")
-    .max(100, "Name is too long."),
+  fullName: z.string().trim().min(2, "Please enter your full name.").max(100, "Name is too long."),
   email: z.string().trim().max(200).pipe(z.email("Please enter a valid email address.")),
   phoneCountry: z.enum(countryIsoCodes),
   phone: z
@@ -100,5 +96,4 @@ export const quoteMetaSchema = z.object({
 export type QuoteMeta = z.infer<typeof quoteMetaSchema>;
 
 export type QuoteResult =
-  | { ok: true }
-  | { ok: false; error: string; fieldErrors?: Partial<Record<keyof QuoteFormInput, string>> };
+  { ok: true } | { ok: false; error: string; fieldErrors?: Partial<Record<keyof QuoteFormInput, string>> };

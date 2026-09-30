@@ -25,8 +25,8 @@ export function Hero({ settings }: { settings: SiteSettings }) {
             We build the websites, apps and AI tools that grow your business.
           </h1>
           <p className="mt-6 max-w-xl text-lg text-body md:text-lead">
-            One team for your website, mobile app, AI chatbot and marketing. Fixed price quotes,
-            weekly updates and a reply within 24 hours.
+            One team for your website, mobile app, AI chatbot and marketing. Fixed price quotes, weekly
+            updates and a reply within 24 hours.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link href="#quote" className={buttonClasses("primary", "lg")}>

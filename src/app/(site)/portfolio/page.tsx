@@ -22,8 +22,11 @@ export default async function PortfolioPage() {
         title="Projects that solved real business problems"
         description="Every case study shows the problem the client had, what we built and the result. Filter by type to find work like yours."
       />
-      <section aria-label="Case studies" className="py-16 lg:py-24">
+      <section aria-labelledby="case-studies" className="py-16 lg:py-24">
         <Container>
+          <h2 id="case-studies" className="sr-only">
+            Case studies
+          </h2>
           <PortfolioFilter items={items} />
         </Container>
       </section>

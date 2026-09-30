@@ -18,7 +18,9 @@ export default async function LeadDetailPage(props: PageProps<"/admin/leads/[id]
   const { id } = await props.params;
   const lead = await db.lead.findUnique({
     where: { id },
-    include: { notes: { orderBy: { createdAt: "desc" }, include: { author: { select: { name: true, email: true } } } } },
+    include: {
+      notes: { orderBy: { createdAt: "desc" }, include: { author: { select: { name: true, email: true } } } },
+    },
   });
   if (!lead) notFound();
 
@@ -33,7 +35,12 @@ export default async function LeadDetailPage(props: PageProps<"/admin/leads/[id]
   ].filter(([, v]) => v);
 
   const facts: [string, React.ReactNode][] = [
-    ["Email", <a key="e" href={`mailto:${lead.email}`} className="text-accent hover:underline">{lead.email}</a>],
+    [
+      "Email",
+      <a key="e" href={`mailto:${lead.email}`} className="text-accent hover:underline">
+        {lead.email}
+      </a>,
+    ],
     ["Phone / WhatsApp", lead.phone],
     ["Company", lead.company],
     ["Service", lead.service],
@@ -46,7 +53,10 @@ export default async function LeadDetailPage(props: PageProps<"/admin/leads/[id]
 
   return (
     <>
-      <Link href="/admin/leads" className="mb-4 inline-flex min-h-11 items-center gap-1.5 text-[15px] font-medium text-muted hover:text-ink">
+      <Link
+        href="/admin/leads"
+        className="mb-4 inline-flex min-h-11 items-center gap-1.5 text-[15px] font-medium text-muted hover:text-ink"
+      >
         <ArrowLeft aria-hidden="true" className="size-4" /> All leads
       </Link>
       <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
@@ -59,7 +69,10 @@ export default async function LeadDetailPage(props: PageProps<"/admin/leads/[id]
         <div className="flex flex-wrap gap-2">
           {phoneDigits && (
             <a
-              href={whatsappUrl(phoneDigits, `Hi ${firstName}, thanks for contacting ${site.name} about ${lead.service}. `)}
+              href={whatsappUrl(
+                phoneDigits,
+                `Hi ${firstName}, thanks for contacting ${site.name} about ${lead.service}. `,
+              )}
               target="_blank"
               rel="noopener noreferrer"
               className={buttonClasses("whatsapp", "sm")}
@@ -67,7 +80,10 @@ export default async function LeadDetailPage(props: PageProps<"/admin/leads/[id]
               <WhatsAppIcon className="size-4" /> WhatsApp
             </a>
           )}
-          <a href={`mailto:${lead.email}?subject=${encodeURIComponent(`Your ${lead.service} project`)}`} className={buttonClasses("primary", "sm")}>
+          <a
+            href={`mailto:${lead.email}?subject=${encodeURIComponent(`Your ${lead.service} project`)}`}
+            className={buttonClasses("primary", "sm")}
+          >
             <Mail aria-hidden="true" className="size-4" /> Email
           </a>
         </div>
@@ -79,7 +95,11 @@ export default async function LeadDetailPage(props: PageProps<"/admin/leads/[id]
             <h2 id="status-title" className="heading-3 mb-4">
               Status
             </h2>
-            <LeadStatusPicker leadId={lead.id} status={lead.status} options={statusOrder.map((s) => ({ value: s, label: statusLabels[s] }))} />
+            <LeadStatusPicker
+              leadId={lead.id}
+              status={lead.status}
+              options={statusOrder.map((s) => ({ value: s, label: statusLabels[s] }))}
+            />
           </section>
 
           <section className="card p-6" aria-labelledby="details-title">
@@ -88,7 +108,12 @@ export default async function LeadDetailPage(props: PageProps<"/admin/leads/[id]
             </h2>
             <p className="mt-3 text-[15px] leading-relaxed whitespace-pre-wrap text-ink">{lead.details}</p>
             {lead.attachmentUrl && (
-              <a href={lead.attachmentUrl} target="_blank" rel="noopener noreferrer" className={buttonClasses("outline", "sm", "mt-5")}>
+              <a
+                href={lead.attachmentUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={buttonClasses("outline", "sm", "mt-5")}
+              >
                 <Paperclip aria-hidden="true" className="size-4" /> {lead.attachmentName ?? "Attachment"}
               </a>
             )}
@@ -109,7 +134,11 @@ export default async function LeadDetailPage(props: PageProps<"/admin/leads/[id]
                         {n.author?.name ?? n.author?.email ?? "Admin"} · {formatDateTime(n.createdAt)}
                       </span>
                       <form action={deleteLeadNote.bind(null, n.id, lead.id)}>
-                        <ConfirmSubmit message="Delete this note?" aria-label="Delete note" className="grid size-9 place-items-center rounded-lg hover:bg-card hover:text-red-700">
+                        <ConfirmSubmit
+                          message="Delete this note?"
+                          aria-label="Delete note"
+                          className="grid size-9 place-items-center rounded-lg hover:bg-card hover:text-red-700"
+                        >
                           <Trash2 aria-hidden="true" className="size-4" />
                         </ConfirmSubmit>
                       </form>
@@ -146,7 +175,10 @@ export default async function LeadDetailPage(props: PageProps<"/admin/leads/[id]
           <form action={deleteLead.bind(null, lead.id)} className="card p-6">
             <h2 className="heading-3">Delete lead</h2>
             <p className="mt-1 text-sm text-muted">Removes the lead and its notes for good.</p>
-            <ConfirmSubmit message={`Delete the lead from ${lead.fullName}? This cannot be undone.`} className={buttonClasses("outline", "sm", "mt-4 text-red-700")}>
+            <ConfirmSubmit
+              message={`Delete the lead from ${lead.fullName}? This cannot be undone.`}
+              className={buttonClasses("outline", "sm", "mt-4 text-red-700")}
+            >
               <Trash2 aria-hidden="true" className="size-4" /> Delete lead
             </ConfirmSubmit>
           </form>

@@ -22,7 +22,13 @@ export const container = {
   maxWidth: "560px",
   padding: "32px",
 };
-export const heading = { color: colors.ink, fontSize: "22px", fontWeight: 700, lineHeight: "1.3", margin: "0 0 12px" };
+export const heading = {
+  color: colors.ink,
+  fontSize: "22px",
+  fontWeight: 700,
+  lineHeight: "1.3",
+  margin: "0 0 12px",
+};
 export const text = { color: colors.body, fontSize: "16px", lineHeight: "1.6", margin: "0 0 16px" };
 export const small = { color: colors.muted, fontSize: "13px", lineHeight: "1.5", margin: 0 };
 export const button = (bg: string) => ({

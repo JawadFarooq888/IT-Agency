@@ -29,12 +29,18 @@ export function AdminForm({
     <FormStateContext.Provider value={state}>
       <form action={formAction} className="space-y-6">
         {state.error && (
-          <p role="alert" className="flex gap-2 rounded-btn border border-red-200 bg-red-50 p-4 text-[15px] text-red-800">
+          <p
+            role="alert"
+            className="flex gap-2 rounded-btn border border-red-200 bg-red-50 p-4 text-[15px] text-red-800"
+          >
             <AlertCircle aria-hidden="true" className="mt-0.5 size-5 shrink-0" /> {state.error}
           </p>
         )}
         {state.ok && state.message && (
-          <p role="status" className="flex gap-2 rounded-btn border border-[#BFE3CC] bg-tint-green p-4 text-[15px] text-tint-green-ink">
+          <p
+            role="status"
+            className="flex gap-2 rounded-btn border border-[#BFE3CC] bg-tint-green p-4 text-[15px] text-tint-green-ink"
+          >
             <CheckCircle2 aria-hidden="true" className="mt-0.5 size-5 shrink-0" /> {state.message}
           </p>
         )}
@@ -116,7 +122,17 @@ function FieldShell({
   );
 }
 
-export function TextField({ name, label, defaultValue, hint, required, wide, placeholder, type = "text", list }: FieldProps & { type?: string; list?: string }) {
+export function TextField({
+  name,
+  label,
+  defaultValue,
+  hint,
+  required,
+  wide,
+  placeholder,
+  type = "text",
+  list,
+}: FieldProps & { type?: string; list?: string }) {
   const id = useId();
   const error = useFieldError(name);
   return (
@@ -136,7 +152,16 @@ export function TextField({ name, label, defaultValue, hint, required, wide, pla
   );
 }
 
-export function TextAreaField({ name, label, defaultValue, hint, required, wide = true, placeholder, rows = 4 }: FieldProps & { rows?: number }) {
+export function TextAreaField({
+  name,
+  label,
+  defaultValue,
+  hint,
+  required,
+  wide = true,
+  placeholder,
+  rows = 4,
+}: FieldProps & { rows?: number }) {
   const id = useId();
   const error = useFieldError(name);
   return (
@@ -167,7 +192,13 @@ export function SelectField({
   const error = useFieldError(name);
   return (
     <FieldShell id={id} label={label} hint={hint} error={error} wide={wide}>
-      <select id={id} name={name} defaultValue={defaultValue} className={inputClass} aria-invalid={Boolean(error)}>
+      <select
+        id={id}
+        name={name}
+        defaultValue={defaultValue}
+        className={inputClass}
+        aria-invalid={Boolean(error)}
+      >
         {options.map((o) => (
           <option key={o.value} value={o.value}>
             {o.label}
@@ -178,11 +209,27 @@ export function SelectField({
   );
 }
 
-export function CheckboxField({ name, label, defaultChecked, hint }: { name: string; label: string; defaultChecked?: boolean; hint?: string }) {
+export function CheckboxField({
+  name,
+  label,
+  defaultChecked,
+  hint,
+}: {
+  name: string;
+  label: string;
+  defaultChecked?: boolean;
+  hint?: string;
+}) {
   const id = useId();
   return (
     <div className="flex items-start gap-3 md:col-span-2">
-      <input id={id} name={name} type="checkbox" defaultChecked={defaultChecked} className="mt-0.5 size-5 accent-accent" />
+      <input
+        id={id}
+        name={name}
+        type="checkbox"
+        defaultChecked={defaultChecked}
+        className="mt-0.5 size-5 accent-accent"
+      />
       <label htmlFor={id} className="text-[15px] text-ink">
         {label}
         {hint && <span className="block text-sm text-muted">{hint}</span>}
@@ -207,8 +254,17 @@ export function CheckboxGroup({
       <legend className={labelClass}>{legend}</legend>
       <div className="flex flex-wrap gap-2">
         {options.map((o) => (
-          <label key={o.value} className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-line bg-card px-4 text-[15px] has-[:checked]:border-accent has-[:checked]:bg-tint-blue">
-            <input type="checkbox" name={name} value={o.value} defaultChecked={defaultValues.includes(o.value)} className="accent-accent" />
+          <label
+            key={o.value}
+            className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-line bg-card px-4 text-[15px] has-[:checked]:border-accent has-[:checked]:bg-tint-blue"
+          >
+            <input
+              type="checkbox"
+              name={name}
+              value={o.value}
+              defaultChecked={defaultValues.includes(o.value)}
+              className="accent-accent"
+            />
             {o.label}
           </label>
         ))}
@@ -221,12 +277,25 @@ async function uploadImage(file: File): Promise<string> {
   if (!file.type.startsWith("image/")) throw new Error("Please choose an image file.");
   if (file.size > 8 * 1024 * 1024) throw new Error("Images must be 8MB or smaller.");
   const safe = file.name.replace(/[^a-zA-Z0-9._-]/g, "_").slice(-80);
-  const blob = await upload(`content/${safe}`, file, { access: "public", handleUploadUrl: "/api/admin/upload" });
+  const blob = await upload(`content/${safe}`, file, {
+    access: "public",
+    handleUploadUrl: "/api/admin/upload",
+  });
   return blob.url;
 }
 
 /** Single image: upload to Vercel Blob or paste a URL. */
-export function ImageField({ name, label, defaultValue, hint }: { name: string; label: string; defaultValue?: string | null; hint?: string }) {
+export function ImageField({
+  name,
+  label,
+  defaultValue,
+  hint,
+}: {
+  name: string;
+  label: string;
+  defaultValue?: string | null;
+  hint?: string;
+}) {
   const id = useId();
   const error = useFieldError(name);
   const [url, setUrl] = useState(defaultValue ?? "");
@@ -260,12 +329,34 @@ export function ImageField({ name, label, defaultValue, hint }: { name: string; 
           )}
         </div>
         <div className="flex-1 space-y-2">
-          <input id={id} name={name} value={url} onChange={(e) => setUrl(e.target.value)} placeholder="https://..." className={inputClass} />
+          <input
+            id={id}
+            name={name}
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            placeholder="https://..."
+            className={inputClass}
+          />
           <div className="flex gap-2">
-            <label className={cn(buttonClasses("outline", "sm"), "cursor-pointer has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-accent")}>
-              {busy ? <Loader2 aria-hidden="true" className="size-4 animate-spin" /> : <ImagePlus aria-hidden="true" className="size-4" />}
+            <label
+              className={cn(
+                buttonClasses("outline", "sm"),
+                "cursor-pointer has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-accent",
+              )}
+            >
+              {busy ? (
+                <Loader2 aria-hidden="true" className="size-4 animate-spin" />
+              ) : (
+                <ImagePlus aria-hidden="true" className="size-4" />
+              )}
               {busy ? "Uploading..." : "Upload image"}
-              <input type="file" accept="image/png,image/jpeg,image/webp,image/avif" onChange={onFile} className="sr-only" disabled={busy} />
+              <input
+                type="file"
+                accept="image/png,image/jpeg,image/webp,image/avif"
+                onChange={onFile}
+                className="sr-only"
+                disabled={busy}
+              />
             </label>
             {url && (
               <button type="button" onClick={() => setUrl("")} className={buttonClasses("outline", "sm")}>
@@ -280,7 +371,15 @@ export function ImageField({ name, label, defaultValue, hint }: { name: string; 
 }
 
 /** Several images, stored one URL per line. */
-export function GalleryField({ name, label, defaultValue }: { name: string; label: string; defaultValue: string[] }) {
+export function GalleryField({
+  name,
+  label,
+  defaultValue,
+}: {
+  name: string;
+  label: string;
+  defaultValue: string[];
+}) {
   const id = useId();
   const error = useFieldError(name);
   const [urls, setUrls] = useState<string[]>(defaultValue);
@@ -306,11 +405,20 @@ export function GalleryField({ name, label, defaultValue }: { name: string; labe
   }
 
   return (
-    <FieldShell id={id} label={label} error={error ?? uploadError ?? undefined} hint="One image URL per line. Upload or paste links." wide>
+    <FieldShell
+      id={id}
+      label={label}
+      error={error ?? uploadError ?? undefined}
+      hint="One image URL per line. Upload or paste links."
+      wide
+    >
       {urls.length > 0 && (
         <ul className="mb-3 grid grid-cols-3 gap-2 sm:grid-cols-5">
           {urls.map((u, i) => (
-            <li key={`${u}-${i}`} className="relative aspect-square overflow-hidden rounded-lg border border-line bg-canvas">
+            <li
+              key={`${u}-${i}`}
+              className="relative aspect-square overflow-hidden rounded-lg border border-line bg-canvas"
+            >
               {/* eslint-disable-next-line @next/next/no-img-element -- admin preview */}
               <img src={u} alt="" className="h-full w-full object-cover" />
               <button
@@ -325,18 +433,44 @@ export function GalleryField({ name, label, defaultValue }: { name: string; labe
           ))}
         </ul>
       )}
-      <textarea id={id} name={name} rows={3} value={urls.join("\n")} onChange={(e) => setUrls(e.target.value.split("\n"))} className={cn(inputClass, "font-mono text-sm")} />
+      <textarea
+        id={id}
+        name={name}
+        rows={3}
+        value={urls.join("\n")}
+        onChange={(e) => setUrls(e.target.value.split("\n"))}
+        className={cn(inputClass, "font-mono text-sm")}
+      />
       <label className={cn(buttonClasses("outline", "sm", "mt-2"), "cursor-pointer")}>
-        {busy ? <Loader2 aria-hidden="true" className="size-4 animate-spin" /> : <ImagePlus aria-hidden="true" className="size-4" />}
+        {busy ? (
+          <Loader2 aria-hidden="true" className="size-4 animate-spin" />
+        ) : (
+          <ImagePlus aria-hidden="true" className="size-4" />
+        )}
         {busy ? "Uploading..." : "Upload images"}
-        <input type="file" accept="image/png,image/jpeg,image/webp,image/avif" multiple onChange={onFiles} className="sr-only" disabled={busy} />
+        <input
+          type="file"
+          accept="image/png,image/jpeg,image/webp,image/avif"
+          multiple
+          onChange={onFiles}
+          className="sr-only"
+          disabled={busy}
+        />
       </label>
     </FieldShell>
   );
 }
 
 /** Markdown textarea with a live preview tab. */
-export function MarkdownField({ name, label, defaultValue }: { name: string; label: string; defaultValue?: string }) {
+export function MarkdownField({
+  name,
+  label,
+  defaultValue,
+}: {
+  name: string;
+  label: string;
+  defaultValue?: string;
+}) {
   const id = useId();
   const error = useFieldError(name);
   const [value, setValue] = useState(defaultValue ?? "");
@@ -344,7 +478,14 @@ export function MarkdownField({ name, label, defaultValue }: { name: string; lab
   const textRef = useRef<HTMLTextAreaElement>(null);
 
   return (
-    <FieldShell id={id} label={label} error={error} hint="Markdown: ## Heading, ### Subheading, **bold**, - list, [link](https://...)" required wide>
+    <FieldShell
+      id={id}
+      label={label}
+      error={error}
+      hint="Markdown: ## Heading, ### Subheading, **bold**, - list, [link](https://...)"
+      required
+      wide
+    >
       <div className="mb-2 flex gap-1" role="tablist" aria-label="Editor mode">
         {(["write", "preview"] as const).map((t) => (
           <button
@@ -353,7 +494,10 @@ export function MarkdownField({ name, label, defaultValue }: { name: string; lab
             role="tab"
             aria-selected={tab === t}
             onClick={() => setTab(t)}
-            className={cn("min-h-10 rounded-lg px-4 text-sm font-semibold capitalize", tab === t ? "bg-ink text-white" : "text-ink hover:bg-card")}
+            className={cn(
+              "min-h-10 rounded-lg px-4 text-sm font-semibold capitalize",
+              tab === t ? "bg-ink text-white" : "text-ink hover:bg-card",
+            )}
           >
             {t}
           </button>

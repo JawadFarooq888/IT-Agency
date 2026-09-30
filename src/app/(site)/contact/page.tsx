@@ -69,7 +69,12 @@ export default async function ContactPage() {
 
       <section aria-labelledby="map-title" className="py-16 lg:py-24">
         <Container>
-          <SectionHeader id="map-title" eyebrow="Location" title={`Based in ${settings.location}`} description="We work remotely with clients all over the world." />
+          <SectionHeader
+            id="map-title"
+            eyebrow="Location"
+            title={`Based in ${settings.location}`}
+            description="We work remotely with clients all over the world."
+          />
           <div className="mt-10 overflow-hidden rounded-card border border-line">
             <iframe
               src={`https://www.google.com/maps?q=${encodeURIComponent(settings.mapQuery)}&output=embed`}

@@ -5,7 +5,10 @@ import { auth } from "@/auth";
 /** Issues upload tokens for admin image uploads (portfolio, blog covers). Admins only. */
 export async function POST(request: Request) {
   if (!process.env.BLOB_READ_WRITE_TOKEN) {
-    return NextResponse.json({ error: "Image uploads need BLOB_READ_WRITE_TOKEN. Paste an image URL instead." }, { status: 503 });
+    return NextResponse.json(
+      { error: "Image uploads need BLOB_READ_WRITE_TOKEN. Paste an image URL instead." },
+      { status: 503 },
+    );
   }
   const body = (await request.json()) as HandleUploadBody;
   try {
@@ -26,6 +29,9 @@ export async function POST(request: Request) {
     });
     return NextResponse.json(result);
   } catch (error) {
-    return NextResponse.json({ error: error instanceof Error ? error.message : "Upload failed" }, { status: 400 });
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : "Upload failed" },
+      { status: 400 },
+    );
   }
 }

@@ -48,7 +48,9 @@ export function LeadStatusPicker({
             onClick={() => choose(o.value)}
             className={cn(
               "min-h-11 rounded-full border px-4 text-[15px] font-medium transition-colors",
-              current === o.value ? "border-ink bg-ink text-white" : "border-line bg-card text-ink hover:border-ink/40",
+              current === o.value
+                ? "border-ink bg-ink text-white"
+                : "border-line bg-card text-ink hover:border-ink/40",
             )}
           >
             {o.label}
@@ -64,18 +66,27 @@ export function LeadStatusPicker({
 
 export function NoteForm({ leadId }: { leadId: string }) {
   const formRef = useRef<HTMLFormElement>(null);
-  const [state, action, pending] = useActionState(async (prev: Parameters<typeof addLeadNote>[1], fd: FormData) => {
-    const res = await addLeadNote(leadId, prev, fd);
-    if (res.ok) formRef.current?.reset();
-    return res;
-  }, {});
+  const [state, action, pending] = useActionState(
+    async (prev: Parameters<typeof addLeadNote>[1], fd: FormData) => {
+      const res = await addLeadNote(leadId, prev, fd);
+      if (res.ok) formRef.current?.reset();
+      return res;
+    },
+    {},
+  );
 
   return (
     <form ref={formRef} action={action} className="space-y-3">
       <label htmlFor="note" className="sr-only">
         Add a private note
       </label>
-      <textarea id="note" name="body" rows={3} placeholder="Add a private note (only admins see this)" className={cn(inputClass, "min-h-24")} />
+      <textarea
+        id="note"
+        name="body"
+        rows={3}
+        placeholder="Add a private note (only admins see this)"
+        className={cn(inputClass, "min-h-24")}
+      />
       {state.error && <p className="text-sm text-red-700">{state.error}</p>}
       <button type="submit" disabled={pending} className={buttonClasses("dark", "sm")}>
         {pending && <Loader2 aria-hidden="true" className="size-4 animate-spin" />} Add note

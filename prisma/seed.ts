@@ -29,7 +29,11 @@ async function main() {
     console.log(`Admin user ${email} already exists (password not changed).`);
   } else {
     await db.user.create({
-      data: { email, name: process.env.ADMIN_SEED_NAME ?? "Admin", passwordHash: await bcrypt.hash(password, 12) },
+      data: {
+        email,
+        name: process.env.ADMIN_SEED_NAME ?? "Admin",
+        passwordHash: await bcrypt.hash(password, 12),
+      },
     });
     console.log(`Created admin user ${email}`);
   }

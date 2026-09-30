@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { processSteps } from "@/content/home";
@@ -15,6 +16,11 @@ import { PortfolioFilter } from "@/components/sections/PortfolioFilter";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { FaqAccordion } from "@/components/sections/FaqAccordion";
 import { ContactSection } from "@/components/sections/ContactSection";
+import { HomeJsonLd } from "@/components/seo/HomeJsonLd";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default async function HomePage() {
   const [settings, caseStudies, testimonials, faqs] = await Promise.all([
@@ -26,6 +32,7 @@ export default async function HomePage() {
 
   return (
     <>
+      <HomeJsonLd settings={settings} faqs={faqs} />
       <Hero settings={settings} />
       <TrustStrip countriesLabel={settings.countriesLabel} />
 
@@ -43,7 +50,11 @@ export default async function HomePage() {
         </Container>
       </section>
 
-      <section id="process" aria-labelledby="process-title" className="border-y border-line bg-card py-20 lg:py-28">
+      <section
+        id="process"
+        aria-labelledby="process-title"
+        className="border-y border-line bg-card py-20 lg:py-28"
+      >
         <Container>
           <SectionHeader
             id="process-title"

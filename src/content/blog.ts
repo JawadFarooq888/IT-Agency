@@ -68,8 +68,7 @@ Send us a short description of what you need and we will reply with a fixed pric
   {
     slug: "ai-chatbot-for-small-business",
     title: "Does your small business need an AI chatbot?",
-    excerpt:
-      "Where AI chatbots save time, where they do not, and how to start small without a big budget.",
+    excerpt: "Where AI chatbots save time, where they do not, and how to start small without a big budget.",
     authorName: "[Author name]",
     category: defaultCategories[1],
     publishedAt: "2026-09-10T09:00:00.000Z",
@@ -107,8 +106,7 @@ Pick one channel, usually your website or WhatsApp, and one goal, such as answer
   {
     slug: "questions-to-ask-before-hiring-a-developer",
     title: "7 questions to ask before hiring a developer",
-    excerpt:
-      "Use these questions to compare agencies and freelancers and avoid the most common problems.",
+    excerpt: "Use these questions to compare agencies and freelancers and avoid the most common problems.",
     authorName: "[Author name]",
     category: defaultCategories[2],
     publishedAt: "2026-09-20T09:00:00.000Z",

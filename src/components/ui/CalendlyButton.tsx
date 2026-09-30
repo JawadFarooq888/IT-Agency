@@ -33,7 +33,8 @@ export function loadCalendly(): Promise<CalendlyApi> {
     const script = document.createElement("script");
     script.src = SCRIPT_SRC;
     script.async = true;
-    script.onload = () => (window.Calendly ? resolve(window.Calendly) : reject(new Error("Calendly missing")));
+    script.onload = () =>
+      window.Calendly ? resolve(window.Calendly) : reject(new Error("Calendly missing"));
     script.onerror = () => {
       loader = null;
       reject(new Error("Could not load Calendly"));
@@ -44,13 +45,7 @@ export function loadCalendly(): Promise<CalendlyApi> {
 }
 
 /** Opens the Calendly popup. Falls back to a new tab if the script fails. */
-export function CalendlyButton({
-  className,
-  children,
-}: {
-  className?: string;
-  children: React.ReactNode;
-}) {
+export function CalendlyButton({ className, children }: { className?: string; children: React.ReactNode }) {
   const { calendlyUrl } = useSettings();
 
   async function handleClick(e: React.MouseEvent<HTMLAnchorElement>) {
@@ -65,7 +60,13 @@ export function CalendlyButton({
   }
 
   return (
-    <a href={calendlyUrl} target="_blank" rel="noopener noreferrer" onClick={handleClick} className={className}>
+    <a
+      href={calendlyUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={handleClick}
+      className={className}
+    >
       {children}
     </a>
   );

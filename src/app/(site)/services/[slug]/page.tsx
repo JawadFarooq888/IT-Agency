@@ -93,7 +93,10 @@ export default async function ServicePage(props: PageProps<"/services/[slug]">) 
             <p className="mt-2 text-[15px]">{service.priceNote}</p>
             <ul className="mt-6 flex flex-wrap gap-1.5" aria-label="Technologies">
               {service.tags.map((t) => (
-                <li key={t} className="rounded-full border border-line bg-canvas px-3 py-1 text-sm text-muted">
+                <li
+                  key={t}
+                  className="rounded-full border border-line bg-canvas px-3 py-1 text-sm text-muted"
+                >
                   {t}
                 </li>
               ))}
@@ -153,7 +156,10 @@ export default async function ServicePage(props: PageProps<"/services/[slug]">) 
                   <h3 className="text-[15px] font-semibold text-ink">{g.group}</h3>
                   <ul className="mt-2.5 flex flex-wrap gap-2">
                     {g.items.map((t) => (
-                      <li key={t} className="rounded-full border border-line bg-canvas px-3.5 py-1.5 text-[15px] text-ink">
+                      <li
+                        key={t}
+                        className="rounded-full border border-line bg-canvas px-3.5 py-1.5 text-[15px] text-ink"
+                      >
                         {t}
                       </li>
                     ))}
@@ -205,7 +211,10 @@ export default async function ServicePage(props: PageProps<"/services/[slug]">) 
               <p className="text-sm font-medium text-muted">Starting from</p>
               <p className="mt-1 font-display text-3xl font-bold text-ink">{service.startingPrice}</p>
               <p className="mt-2 text-[15px]">{service.priceNote}. Custom quotes are always free.</p>
-              <Link href="/pricing" className="mt-4 inline-flex min-h-11 items-center gap-1 font-semibold text-accent">
+              <Link
+                href="/pricing"
+                className="mt-4 inline-flex min-h-11 items-center gap-1 font-semibold text-accent"
+              >
                 See all packages <ArrowRight aria-hidden="true" className="size-4" />
               </Link>
             </div>

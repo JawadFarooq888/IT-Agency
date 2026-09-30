@@ -22,114 +22,109 @@ async function withFallback<T>(label: string, load: () => Promise<T>, fallback: 
   }
 }
 
-export const getCaseStudies = cache(
-  (): Promise<CaseStudy[]> =>
-    withFallback(
-      "portfolio",
-      async () => {
-        const rows = await db.portfolioItem.findMany({
-          where: { published: true },
-          orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
-        });
-        return rows.map((r) => ({
-          slug: r.slug,
-          title: r.title,
-          client: r.client,
-          industry: r.industry,
-          country: r.country,
-          category: r.category as PortfolioCategory,
-          services: r.services as ServiceSlug[],
-          summary: r.summary,
-          problem: r.problem,
-          solution: r.solution,
-          result: r.result,
-          results: r.results,
-          tech: r.tech,
-          coverImage: r.coverImage ?? undefined,
-          gallery: r.gallery,
-          testimonial: r.testimonialQuote
-            ? { quote: r.testimonialQuote, name: r.testimonialName ?? "", role: r.testimonialRole ?? "" }
-            : undefined,
-        }));
-      },
-      defaultCaseStudies,
-    ),
+export const getCaseStudies = cache((): Promise<CaseStudy[]> =>
+  withFallback(
+    "portfolio",
+    async () => {
+      const rows = await db.portfolioItem.findMany({
+        where: { published: true },
+        orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
+      });
+      return rows.map((r) => ({
+        slug: r.slug,
+        title: r.title,
+        client: r.client,
+        industry: r.industry,
+        country: r.country,
+        category: r.category as PortfolioCategory,
+        services: r.services as ServiceSlug[],
+        summary: r.summary,
+        problem: r.problem,
+        solution: r.solution,
+        result: r.result,
+        results: r.results,
+        tech: r.tech,
+        coverImage: r.coverImage ?? undefined,
+        gallery: r.gallery,
+        testimonial: r.testimonialQuote
+          ? { quote: r.testimonialQuote, name: r.testimonialName ?? "", role: r.testimonialRole ?? "" }
+          : undefined,
+      }));
+    },
+    defaultCaseStudies,
+  ),
 );
 
 export const getCaseStudy = cache(async (slug: string): Promise<CaseStudy | undefined> =>
   (await getCaseStudies()).find((c) => c.slug === slug),
 );
 
-export const getTestimonials = cache(
-  (): Promise<TestimonialItem[]> =>
-    withFallback(
-      "testimonials",
-      () =>
-        db.testimonial.findMany({
-          where: { published: true },
-          orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
-          select: { name: true, role: true, company: true, country: true, quote: true },
-        }),
-      defaultTestimonials,
-    ),
+export const getTestimonials = cache((): Promise<TestimonialItem[]> =>
+  withFallback(
+    "testimonials",
+    () =>
+      db.testimonial.findMany({
+        where: { published: true },
+        orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
+        select: { name: true, role: true, company: true, country: true, quote: true },
+      }),
+    defaultTestimonials,
+  ),
 );
 
-export const getFaqs = cache(
-  (): Promise<FaqItem[]> =>
-    withFallback(
-      "faqs",
-      () =>
-        db.faq.findMany({
-          where: { published: true },
-          orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],
-          select: { question: true, answer: true },
-        }),
-      defaultFaqs,
-    ),
+export const getFaqs = cache((): Promise<FaqItem[]> =>
+  withFallback(
+    "faqs",
+    () =>
+      db.faq.findMany({
+        where: { published: true },
+        orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],
+        select: { question: true, answer: true },
+      }),
+    defaultFaqs,
+  ),
 );
 
-export const getPosts = cache(
-  (): Promise<BlogPostView[]> =>
-    withFallback(
-      "blog posts",
-      async () => {
-        const rows = await db.blogPost.findMany({
-          where: { status: "PUBLISHED", publishedAt: { lte: new Date() } },
-          orderBy: [{ publishedAt: "desc" }],
-          include: { category: { select: { name: true, slug: true } } },
-        });
-        return rows.map((r) => ({
-          slug: r.slug,
-          title: r.title,
-          excerpt: r.excerpt,
-          content: r.content,
-          coverImage: r.coverImage,
-          authorName: r.authorName,
-          category: r.category,
-          publishedAt: (r.publishedAt ?? r.createdAt).toISOString(),
-          updatedAt: r.updatedAt.toISOString(),
-          seoTitle: r.seoTitle,
-          seoDescription: r.seoDescription,
-        }));
-      },
-      [...defaultPosts].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt)),
-    ),
+export const getPosts = cache((): Promise<BlogPostView[]> =>
+  withFallback(
+    "blog posts",
+    async () => {
+      const rows = await db.blogPost.findMany({
+        where: { status: "PUBLISHED", publishedAt: { lte: new Date() } },
+        orderBy: [{ publishedAt: "desc" }],
+        include: { category: { select: { name: true, slug: true } } },
+      });
+      return rows.map((r) => ({
+        slug: r.slug,
+        title: r.title,
+        excerpt: r.excerpt,
+        content: r.content,
+        coverImage: r.coverImage,
+        authorName: r.authorName,
+        category: r.category,
+        publishedAt: (r.publishedAt ?? r.createdAt).toISOString(),
+        updatedAt: r.updatedAt.toISOString(),
+        seoTitle: r.seoTitle,
+        seoDescription: r.seoDescription,
+      }));
+    },
+    [...defaultPosts].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt)),
+  ),
 );
 
 export const getPost = cache(async (slug: string): Promise<BlogPostView | undefined> =>
   (await getPosts()).find((p) => p.slug === slug),
 );
 
-export const getCategories = cache(
-  (): Promise<BlogCategory[]> =>
-    withFallback(
-      "categories",
-      () =>
-        db.category.findMany({
-          where: { posts: { some: { status: "PUBLISHED" } } },
-          orderBy: { name: "asc" },
-          select: { name: true, slug: true },
-        }),
-      defaultCategories,
-    ),
+export const getCategories = cache((): Promise<BlogCategory[]> =>
+  withFallback(
+    "categories",
+    () =>
+      db.category.findMany({
+        where: { posts: { some: { status: "PUBLISHED" } } },
+        orderBy: { name: "asc" },
+        select: { name: true, slug: true },
+      }),
+    defaultCategories,
+  ),
 );

@@ -30,7 +30,12 @@ const statusStyles: Record<string, string> = {
 
 export function StatusBadge({ status, label }: { status: string; label: string }) {
   return (
-    <span className={cn("inline-flex rounded-full px-2.5 py-1 text-xs font-semibold whitespace-nowrap", statusStyles[status])}>
+    <span
+      className={cn(
+        "inline-flex rounded-full px-2.5 py-1 text-xs font-semibold whitespace-nowrap",
+        statusStyles[status],
+      )}
+    >
       {label}
     </span>
   );

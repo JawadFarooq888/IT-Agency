@@ -28,8 +28,11 @@ export default async function DashboardPage() {
   ]);
 
   const conversion = total ? ((won / total) * 100).toFixed(1) : "0.0";
-  const count = <T,>(rows: (T & { _count: { _all: number } })[], pick: (r: T) => string | null, key: string) =>
-    rows.find((r) => (pick(r) ?? "Not set") === key)?._count._all ?? 0;
+  const count = <T,>(
+    rows: (T & { _count: { _all: number } })[],
+    pick: (r: T) => string | null,
+    key: string,
+  ) => rows.find((r) => (pick(r) ?? "Not set") === key)?._count._all ?? 0;
 
   const serviceRows = serviceOptions
     .map((s) => ({ label: s, value: count(byService, (r) => r.service, s) }))
@@ -57,7 +60,9 @@ export default async function DashboardPage() {
               {t.label}
               {t.hint && <span className="block text-xs">{t.hint}</span>}
             </dt>
-            <dd className="font-display text-3xl font-bold tracking-tight text-ink tabular-nums">{t.value}</dd>
+            <dd className="font-display text-3xl font-bold tracking-tight text-ink tabular-nums">
+              {t.value}
+            </dd>
           </div>
         ))}
       </dl>
@@ -83,13 +88,21 @@ export default async function DashboardPage() {
           <h2 id="by-service" className="heading-3">
             Leads by service
           </h2>
-          {total ? <BarList caption="Leads by service" rows={serviceRows} total={total} /> : <p className="mt-4 text-muted">No leads yet.</p>}
+          {total ? (
+            <BarList caption="Leads by service" rows={serviceRows} total={total} />
+          ) : (
+            <p className="mt-4 text-muted">No leads yet.</p>
+          )}
         </section>
         <section className="card p-6" aria-labelledby="by-budget">
           <h2 id="by-budget" className="heading-3">
             Leads by budget
           </h2>
-          {total ? <BarList caption="Leads by budget" rows={budgetRows} total={total} /> : <p className="mt-4 text-muted">No leads yet.</p>}
+          {total ? (
+            <BarList caption="Leads by budget" rows={budgetRows} total={total} />
+          ) : (
+            <p className="mt-4 text-muted">No leads yet.</p>
+          )}
         </section>
       </div>
 
@@ -98,7 +111,10 @@ export default async function DashboardPage() {
           <h2 id="recent" className="heading-3">
             Latest leads
           </h2>
-          <Link href="/admin/leads" className="inline-flex min-h-11 items-center gap-1 text-[15px] font-semibold text-accent">
+          <Link
+            href="/admin/leads"
+            className="inline-flex min-h-11 items-center gap-1 text-[15px] font-semibold text-accent"
+          >
             All leads <ArrowRight aria-hidden="true" className="size-4" />
           </Link>
         </div>
@@ -108,7 +124,10 @@ export default async function DashboardPage() {
           <ul className="card divide-y divide-line">
             {recent.map((l) => (
               <li key={l.id}>
-                <Link href={`/admin/leads/${l.id}`} className="flex flex-wrap items-center gap-x-4 gap-y-1 px-5 py-4 hover:bg-canvas">
+                <Link
+                  href={`/admin/leads/${l.id}`}
+                  className="flex flex-wrap items-center gap-x-4 gap-y-1 px-5 py-4 hover:bg-canvas"
+                >
                   <span className="min-w-40 flex-1 font-semibold text-ink">{l.fullName}</span>
                   <span className="text-sm text-muted">{l.service}</span>
                   <span className="text-sm text-muted">{formatDateTime(l.createdAt)}</span>

@@ -37,12 +37,7 @@ export function WhatsAppLink({
 export function EmailLink({ className, children, ...rest }: BaseProps) {
   const { email } = useSettings();
   return (
-    <a
-      href={`mailto:${email}`}
-      className={className}
-      onClick={() => trackEvent("email_click")}
-      {...rest}
-    >
+    <a href={`mailto:${email}`} className={className} onClick={() => trackEvent("email_click")} {...rest}>
       {children}
     </a>
   );

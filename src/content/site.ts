@@ -10,8 +10,7 @@ export const site = {
   tagline: "We build the websites, apps and AI tools that grow your business.",
   description:
     "Web development, mobile apps, AI automation, cloud and digital marketing for small and medium businesses and startups. Fixed price quotes and replies within 24 hours.",
-  shortDescription:
-    "Software, AI and digital growth under one roof for small businesses and startups.",
+  shortDescription: "Software, AI and digital growth under one roof for small businesses and startups.",
   countries: ["US", "UK", "UAE", "Pakistan"],
   foundedYear: "[2020]",
 } as const;

@@ -115,7 +115,10 @@ export default async function CaseStudyPage(props: PageProps<"/portfolio/[slug]"
               <h2 className="heading-2">Gallery</h2>
               <ul className="mt-6 grid gap-4 sm:grid-cols-2">
                 {gallery.map((src, i) => (
-                  <li key={src ?? i} className="relative aspect-[4/3] overflow-hidden rounded-card-sm border border-line bg-card">
+                  <li
+                    key={src ?? i}
+                    className="relative aspect-[4/3] overflow-hidden rounded-card-sm border border-line bg-card"
+                  >
                     {src ? (
                       <Image
                         src={src}
@@ -125,7 +128,9 @@ export default async function CaseStudyPage(props: PageProps<"/portfolio/[slug]"
                         className="object-cover"
                       />
                     ) : (
-                      <div className="grid h-full place-items-center text-sm text-muted">[Screenshot {i + 1}]</div>
+                      <div className="grid h-full place-items-center text-sm text-muted">
+                        [Screenshot {i + 1}]
+                      </div>
                     )}
                   </li>
                 ))}
@@ -138,7 +143,10 @@ export default async function CaseStudyPage(props: PageProps<"/portfolio/[slug]"
               <h2 className="heading-3">Tech used</h2>
               <ul className="mt-4 flex flex-wrap gap-2">
                 {item.tech.map((t) => (
-                  <li key={t} className="rounded-full border border-line bg-canvas px-3 py-1.5 text-[15px] text-ink">
+                  <li
+                    key={t}
+                    className="rounded-full border border-line bg-canvas px-3 py-1.5 text-[15px] text-ink"
+                  >
                     {t}
                   </li>
                 ))}
@@ -158,7 +166,9 @@ export default async function CaseStudyPage(props: PageProps<"/portfolio/[slug]"
             )}
             <div className="card p-6">
               <h2 className="heading-3">Need something similar?</h2>
-              <p className="mt-2 text-[15px]">Tell us about your project and get a free quote within 24 hours.</p>
+              <p className="mt-2 text-[15px]">
+                Tell us about your project and get a free quote within 24 hours.
+              </p>
               <Link href="/contact#quote" className={buttonClasses("primary", "md", "mt-5 w-full")}>
                 Get a free quote <ArrowRight aria-hidden="true" className="size-4" />
               </Link>

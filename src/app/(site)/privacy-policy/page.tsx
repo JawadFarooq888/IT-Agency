@@ -24,23 +24,23 @@ export default async function PrivacyPolicyPage() {
         <div className="prose">
           <p>
             This Privacy Policy explains how [{site.name} legal company name] (&ldquo;we&rdquo;,
-            &ldquo;us&rdquo;) collects, uses and protects your information when you visit{" "}
-            {site.domain} or contact us.
+            &ldquo;us&rdquo;) collects, uses and protects your information when you visit {site.domain} or
+            contact us.
           </p>
 
           <h2>Information we collect</h2>
           <ul>
             <li>
-              <strong>Information you give us:</strong> your name, email, phone or WhatsApp number,
-              company name, project details and any files you upload through our quote form.
+              <strong>Information you give us:</strong> your name, email, phone or WhatsApp number, company
+              name, project details and any files you upload through our quote form.
             </li>
             <li>
-              <strong>Usage information:</strong> pages visited, referring website, campaign (UTM)
-              tags, device and browser type, collected through Google Analytics and similar tools.
+              <strong>Usage information:</strong> pages visited, referring website, campaign (UTM) tags,
+              device and browser type, collected through Google Analytics and similar tools.
             </li>
             <li>
-              <strong>Technical data:</strong> a one-way hashed version of your IP address, used only
-              to prevent spam.
+              <strong>Technical data:</strong> a one-way hashed version of your IP address, used only to
+              prevent spam.
             </li>
           </ul>
 
@@ -55,9 +55,9 @@ export default async function PrivacyPolicyPage() {
 
           <h2>Legal basis</h2>
           <p>
-            We process your data based on your consent (when you submit the form), to take steps
-            before entering a contract with you, and for our legitimate interests in running and
-            protecting our business.
+            We process your data based on your consent (when you submit the form), to take steps before
+            entering a contract with you, and for our legitimate interests in running and protecting our
+            business.
           </p>
 
           <h2>Service providers</h2>
@@ -73,21 +73,21 @@ export default async function PrivacyPolicyPage() {
 
           <h2>How long we keep data</h2>
           <p>
-            We keep enquiry data for up to [24 months] after our last contact, unless we have an
-            ongoing contract or a legal reason to keep it longer.
+            We keep enquiry data for up to [24 months] after our last contact, unless we have an ongoing
+            contract or a legal reason to keep it longer.
           </p>
 
           <h2>Your rights</h2>
           <p>
-            Depending on where you live, you may have the right to access, correct, delete or export
-            your data, and to object to or restrict how we use it. To make a request, email us at{" "}
+            Depending on where you live, you may have the right to access, correct, delete or export your
+            data, and to object to or restrict how we use it. To make a request, email us at{" "}
             <a href={`mailto:${email}`}>{email}</a>.
           </p>
 
           <h2>Cookies</h2>
           <p>
-            We use cookies for analytics and to keep the admin area secure. You can block cookies in
-            your browser settings. [Describe your cookie banner here if you use one.]
+            We use cookies for analytics and to keep the admin area secure. You can block cookies in your
+            browser settings. [Describe your cookie banner here if you use one.]
           </p>
 
           <h2>Contact</h2>

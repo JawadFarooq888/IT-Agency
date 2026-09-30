@@ -78,7 +78,10 @@ export function leadOrderBy(f: LeadFilters): Prisma.LeadOrderByWithRelationInput
 }
 
 /** Builds a query string from filters, with overrides. Empty values are dropped. */
-export function filtersToQuery(f: LeadFilters, overrides: Partial<Record<keyof LeadFilters, string | number>> = {}) {
+export function filtersToQuery(
+  f: LeadFilters,
+  overrides: Partial<Record<keyof LeadFilters, string | number>> = {},
+) {
   const merged: Record<string, string | number> = { ...f, ...overrides };
   const params = new URLSearchParams();
   for (const [k, v] of Object.entries(merged)) {

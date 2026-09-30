@@ -18,7 +18,14 @@ export default async function EditTestimonialPage(props: PageProps<"/admin/testi
       <AdminHeader title={isNew ? "New testimonial" : "Edit testimonial"} />
       <AdminForm action={saveTestimonial.bind(null, t?.id ?? null)} cancelHref="/admin/testimonials">
         <FormSection title="Testimonial">
-          <TextAreaField name="quote" label="Quote" defaultValue={t?.quote} rows={4} required hint="Use the client's real words, with their permission." />
+          <TextAreaField
+            name="quote"
+            label="Quote"
+            defaultValue={t?.quote}
+            rows={4}
+            required
+            hint="Use the client's real words, with their permission."
+          />
           <TextField name="name" label="Name" defaultValue={t?.name} required />
           <TextField name="role" label="Role" defaultValue={t?.role} required />
           <TextField name="company" label="Company" defaultValue={t?.company} required />

@@ -95,7 +95,9 @@ export function AdminShell({ userEmail, children }: { userEmail: string; childre
 
   return (
     <div className="lg:pl-64">
-      <aside className="fixed inset-y-0 left-0 hidden w-64 border-r border-line bg-card lg:block">{sidebar}</aside>
+      <aside className="fixed inset-y-0 left-0 hidden w-64 border-r border-line bg-card lg:block">
+        {sidebar}
+      </aside>
 
       {/* Mobile */}
       <div className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-line bg-card px-4 lg:hidden">

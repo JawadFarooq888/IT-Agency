@@ -27,13 +27,28 @@ export default async function EditBlogPostPage(props: PageProps<"/admin/blog/[id
   return (
     <>
       <AdminHeader title={isNew ? "New post" : "Edit post"} description={post?.title} />
-      <AdminForm action={saveBlogPost.bind(null, post?.id ?? null)} cancelHref="/admin/blog" submitLabel={isNew ? "Create post" : "Save post"}>
+      <AdminForm
+        action={saveBlogPost.bind(null, post?.id ?? null)}
+        cancelHref="/admin/blog"
+        submitLabel={isNew ? "Create post" : "Save post"}
+      >
         <FormSection title="Post">
           <TextField name="title" label="Title" defaultValue={post?.title} required wide />
-          <TextField name="slug" label="URL slug" defaultValue={post?.slug} hint="Leave empty to create it from the title." />
+          <TextField
+            name="slug"
+            label="URL slug"
+            defaultValue={post?.slug}
+            hint="Leave empty to create it from the title."
+          />
           <TextField name="authorName" label="Author" defaultValue={post?.authorName} required />
           <div>
-            <TextField name="category" list="blog-categories" label="Category" defaultValue={post?.category?.name ?? ""} hint="Pick an existing one or type a new name." />
+            <TextField
+              name="category"
+              list="blog-categories"
+              label="Category"
+              defaultValue={post?.category?.name ?? ""}
+              hint="Pick an existing one or type a new name."
+            />
             <datalist id="blog-categories">
               {categories.map((c) => (
                 <option key={c.id} value={c.name} />
@@ -56,7 +71,14 @@ export default async function EditBlogPostPage(props: PageProps<"/admin/blog/[id
             defaultValue={post?.publishedAt?.toISOString().slice(0, 10)}
             hint="Empty = today when published. A future date schedules the post."
           />
-          <TextAreaField name="excerpt" label="Excerpt" defaultValue={post?.excerpt} rows={2} required hint="One or two sentences shown on blog cards." />
+          <TextAreaField
+            name="excerpt"
+            label="Excerpt"
+            defaultValue={post?.excerpt}
+            rows={2}
+            required
+            hint="One or two sentences shown on blog cards."
+          />
           <ImageField name="coverImage" label="Cover image" defaultValue={post?.coverImage} />
         </FormSection>
 
@@ -65,8 +87,20 @@ export default async function EditBlogPostPage(props: PageProps<"/admin/blog/[id
         </FormSection>
 
         <FormSection title="SEO">
-          <TextField name="seoTitle" label="SEO title" defaultValue={post?.seoTitle ?? ""} hint="Optional. Up to 70 characters. Defaults to the title." wide />
-          <TextAreaField name="seoDescription" label="SEO description" defaultValue={post?.seoDescription ?? ""} rows={2} hint="Optional. Up to 170 characters. Defaults to the excerpt." />
+          <TextField
+            name="seoTitle"
+            label="SEO title"
+            defaultValue={post?.seoTitle ?? ""}
+            hint="Optional. Up to 70 characters. Defaults to the title."
+            wide
+          />
+          <TextAreaField
+            name="seoDescription"
+            label="SEO description"
+            defaultValue={post?.seoDescription ?? ""}
+            rows={2}
+            hint="Optional. Up to 170 characters. Defaults to the excerpt."
+          />
         </FormSection>
       </AdminForm>
     </>

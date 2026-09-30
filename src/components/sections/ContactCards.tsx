@@ -4,8 +4,7 @@ import { CalendlyButton } from "@/components/ui/CalendlyButton";
 import { EmailLink, WhatsAppLink } from "@/components/ui/TrackedLinks";
 import { WhatsAppIcon } from "@/components/ui/BrandIcons";
 
-const cardClass =
-  "card group flex items-center gap-4 p-5 transition-colors hover:border-ink/25 md:p-6";
+const cardClass = "card group flex items-center gap-4 p-5 transition-colors hover:border-ink/25 md:p-6";
 
 function Arrow() {
   return (

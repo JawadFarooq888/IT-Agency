@@ -26,7 +26,7 @@ export function ContactSection({
           </div>
         </div>
         <div id="quote" className="card scroll-mt-24 p-5 sm:p-8">
-          <QuoteForm defaultService={service?.title} />
+          <QuoteForm defaultService={service?.title} headingLevel="h3" />
         </div>
       </Container>
     </section>

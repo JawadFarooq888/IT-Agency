@@ -24,7 +24,12 @@ export function PageHero({
     <section className={cn("border-b border-line pt-8 pb-14 md:pt-10 lg:pb-20", className)}>
       <Container>
         <Breadcrumbs items={crumbs} />
-        <div className={cn("mt-8 lg:mt-12", Boolean(aside) && "grid items-center gap-10 lg:grid-cols-[1.3fr_1fr]")}>
+        <div
+          className={cn(
+            "mt-8 lg:mt-12",
+            Boolean(aside) && "grid items-center gap-10 lg:grid-cols-[1.3fr_1fr]",
+          )}
+        >
           <div className="max-w-3xl">
             {eyebrow && <p className="eyebrow">{eyebrow}</p>}
             <h1 className={cn("heading-1", eyebrow && "mt-3")}>{title}</h1>

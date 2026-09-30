@@ -5,7 +5,6 @@ import { useId, useRef, useState } from "react";
 import { useForm, useWatch, type FieldError } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertCircle, CheckCircle2, Loader2, Paperclip, Send, X } from "lucide-react";
-import { upload } from "@vercel/blob/client";
 import { serviceOptions } from "@/content/services";
 import {
   budgetOptions,
@@ -26,7 +25,6 @@ import { inputClass } from "@/components/ui/form-styles";
 import { WhatsAppLink } from "@/components/ui/TrackedLinks";
 import { WhatsAppIcon } from "@/components/ui/BrandIcons";
 import { Turnstile, turnstileSiteKey } from "./Turnstile";
-
 
 function FieldErrorText({ id, error }: { id: string; error?: FieldError | { message?: string } }) {
   if (!error?.message) return null;
@@ -90,7 +88,15 @@ function Chips<T extends string>({
 
 type Status = "idle" | "uploading" | "sending" | "success";
 
-export function QuoteForm({ defaultService }: { defaultService?: string }) {
+export function QuoteForm({
+  defaultService,
+  headingLevel = "h2",
+}: {
+  defaultService?: string;
+  /** Use h3 when the form sits under a section h2 */
+  headingLevel?: "h2" | "h3";
+}) {
+  const Heading = headingLevel;
   const uid = useId();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [status, setStatus] = useState<Status>("idle");
@@ -157,6 +163,8 @@ export function QuoteForm({ defaultService }: { defaultService?: string }) {
       if (file) {
         setStatus("uploading");
         const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_").slice(-100);
+        // Loaded only when a file is attached, to keep the page light
+        const { upload } = await import("@vercel/blob/client");
         const blob = await upload(`leads/${safeName}`, file, {
           access: "public",
           handleUploadUrl: "/api/upload",
@@ -178,7 +186,10 @@ export function QuoteForm({ defaultService }: { defaultService?: string }) {
       sourcePage: window.location.pathname,
       referrer: attribution.referrer,
       utm: attribution.utm,
-    }).catch(() => ({ ok: false as const, error: "Network error. Please check your connection and try again." }));
+    }).catch(() => ({
+      ok: false as const,
+      error: "Network error. Please check your connection and try again.",
+    }));
 
     if (result.ok) {
       trackEvent("quote_form_submit", { service: values.service, budget: values.budget ?? "not set" });
@@ -208,12 +219,12 @@ export function QuoteForm({ defaultService }: { defaultService?: string }) {
         <span className="grid size-16 place-items-center rounded-full bg-tint-green text-tint-green-ink">
           <CheckCircle2 aria-hidden="true" className="size-8" />
         </span>
-        <h3 className="heading-3 mt-6 text-2xl">
+        <Heading className="heading-3 mt-6 text-2xl">
           Thanks{submittedName ? `, ${submittedName}` : ""}! Your request is in.
-        </h3>
+        </Heading>
         <p className="mt-3 max-w-md text-lg">
-          We will reply within 24 hours. We also sent a confirmation to your email. Want a faster
-          answer? Message us on WhatsApp now.
+          We will reply within 24 hours. We also sent a confirmation to your email. Want a faster answer?
+          Message us on WhatsApp now.
         </p>
         <WhatsAppLink service={submittedService} className={buttonClasses("whatsapp", "lg", "mt-8")}>
           <WhatsAppIcon className="size-5" /> Chat on WhatsApp now
@@ -246,8 +257,12 @@ export function QuoteForm({ defaultService }: { defaultService?: string }) {
   const err = (k: string) => `${uid}-${k}-error`;
 
   return (
-    <form onSubmit={(e) => void handleSubmit(onSubmit)(e)} noValidate aria-describedby={formError ? `${uid}-form-error` : undefined}>
-      <h3 className="heading-3 text-2xl">Get a free quote</h3>
+    <form
+      onSubmit={(e) => void handleSubmit(onSubmit)(e)}
+      noValidate
+      aria-describedby={formError ? `${uid}-form-error` : undefined}
+    >
+      <Heading className="heading-3 text-2xl">Get a free quote</Heading>
       <p className="mt-1.5 text-[15px] text-muted">
         Fields marked <span aria-hidden="true">*</span>
         <span className="sr-only">with an asterisk</span> are required.
@@ -305,11 +320,9 @@ export function QuoteForm({ defaultService }: { defaultService?: string }) {
             WhatsApp / phone <span className="font-normal text-muted">(optional)</span>
           </label>
           <div className="flex gap-2">
-            <label htmlFor={ids.country} className="sr-only">
-              Country code
-            </label>
             <select
               id={ids.country}
+              aria-label="Country code"
               autoComplete="tel-country-code"
               className={cn(inputClass, "w-[108px] shrink-0 px-3")}
               {...register("phoneCountry")}
@@ -399,7 +412,9 @@ export function QuoteForm({ defaultService }: { defaultService?: string }) {
             <label htmlFor={ids.details} className="block text-[15px] font-semibold text-ink">
               Project details <span aria-hidden="true">*</span>
             </label>
-            <span className={cn("text-sm", details.trim().length < 20 ? "text-muted" : "text-tint-green-ink")}>
+            <span
+              className={cn("text-sm", details.trim().length < 20 ? "text-muted" : "text-tint-green-ink")}
+            >
               {details.trim().length} / 20 min
             </span>
           </div>
@@ -441,8 +456,8 @@ export function QuoteForm({ defaultService }: { defaultService?: string }) {
             >
               <Paperclip aria-hidden="true" className="size-4 shrink-0 text-muted" />
               <span>
-                <span className="font-semibold text-accent">Choose a file</span> · PDF, DOC, DOCX, PNG or
-                JPG, max 10MB
+                <span className="font-semibold text-accent">Choose a file</span> · PDF, DOC, DOCX, PNG or JPG,
+                max 10MB
               </span>
               <input
                 ref={fileInputRef}
@@ -461,7 +476,13 @@ export function QuoteForm({ defaultService }: { defaultService?: string }) {
         {/* Honeypot: hidden from people and screen readers, bots fill it in */}
         <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
           <label htmlFor={`${uid}-website`}>Website</label>
-          <input id={`${uid}-website`} type="text" tabIndex={-1} autoComplete="off" {...register("website")} />
+          <input
+            id={`${uid}-website`}
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            {...register("website")}
+          />
         </div>
 
         <div className="sm:col-span-2">

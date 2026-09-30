@@ -6,7 +6,10 @@ import { db, isDbConfigured } from "./db";
 
 /** Validation for settings saved from /admin/settings. */
 export const siteSettingsSchema = z.object({
-  whatsappNumber: z.string().trim().regex(/^\d{8,15}$/, "Digits only, with country code, e.g. 923001234567"),
+  whatsappNumber: z
+    .string()
+    .trim()
+    .regex(/^\d{8,15}$/, "Digits only, with country code, e.g. 923001234567"),
   whatsappDisplay: z.string().trim().min(1).max(40),
   email: z.email().max(200),
   calendlyUrl: z.url().max(300),

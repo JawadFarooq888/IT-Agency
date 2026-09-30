@@ -19,12 +19,44 @@ export async function GET(request: Request) {
   const leads = await db.lead.findMany({ where: leadWhere(f), orderBy: leadOrderBy(f), take: 10_000 });
 
   const header = [
-    "Received", "Name", "Email", "Phone", "Company", "Service", "Budget", "Timeline", "Status",
-    "Details", "Attachment", "Source page", "Referrer", "UTM source", "UTM medium", "UTM campaign", "UTM term", "UTM content",
+    "Received",
+    "Name",
+    "Email",
+    "Phone",
+    "Company",
+    "Service",
+    "Budget",
+    "Timeline",
+    "Status",
+    "Details",
+    "Attachment",
+    "Source page",
+    "Referrer",
+    "UTM source",
+    "UTM medium",
+    "UTM campaign",
+    "UTM term",
+    "UTM content",
   ];
   const rows = leads.map((l) => [
-    l.createdAt, l.fullName, l.email, l.phone, l.company, l.service, l.budget, l.timeline, statusLabels[l.status],
-    l.details, l.attachmentUrl, l.sourcePage, l.referrer, l.utmSource, l.utmMedium, l.utmCampaign, l.utmTerm, l.utmContent,
+    l.createdAt,
+    l.fullName,
+    l.email,
+    l.phone,
+    l.company,
+    l.service,
+    l.budget,
+    l.timeline,
+    statusLabels[l.status],
+    l.details,
+    l.attachmentUrl,
+    l.sourcePage,
+    l.referrer,
+    l.utmSource,
+    l.utmMedium,
+    l.utmCampaign,
+    l.utmTerm,
+    l.utmContent,
   ]);
   const csv = "﻿" + [header, ...rows].map((r) => r.map(csvCell).join(",")).join("\r\n");
 

@@ -5,7 +5,12 @@ import type { BlogPostView } from "@/content/blog";
 import { readingTime } from "@/lib/markdown";
 
 export function formatDate(iso: string): string {
-  return new Date(iso).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric", timeZone: "UTC" });
+  return new Date(iso).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    timeZone: "UTC",
+  });
 }
 
 export function PostCard({ post }: { post: BlogPostView }) {
@@ -35,7 +40,7 @@ export function PostCard({ post }: { post: BlogPostView }) {
           <span>{readingTime(post.content)} min read</span>
         </p>
         <h3 className="heading-3 mt-3">
-          <Link href={`/blog/${post.slug}`} className="after:absolute after:inset-0 group-hover:text-accent">
+          <Link href={`/blog/${post.slug}`} className="group-hover:text-accent after:absolute after:inset-0">
             {post.title}
           </Link>
         </h3>

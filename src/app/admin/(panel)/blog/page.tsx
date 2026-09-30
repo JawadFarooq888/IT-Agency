@@ -32,7 +32,10 @@ export default async function AdminBlogPage() {
         rows={posts.map((p) => ({
           id: p.id,
           title: p.title,
-          subtitle: [p.category?.name, p.publishedAt ? p.publishedAt.toISOString().slice(0, 10) : "Not published"]
+          subtitle: [
+            p.category?.name,
+            p.publishedAt ? p.publishedAt.toISOString().slice(0, 10) : "Not published",
+          ]
             .filter(Boolean)
             .join(" · "),
           badge: p.status === "PUBLISHED" ? { label: "Published" } : { label: "Draft", muted: true },

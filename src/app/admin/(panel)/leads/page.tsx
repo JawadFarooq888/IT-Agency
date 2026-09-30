@@ -30,8 +30,15 @@ function SortHeader({ f, col, children }: { f: LeadFilters; col: LeadSort; child
   const nextDir = active && f.dir === "desc" ? "asc" : "desc";
   const Icon = f.dir === "asc" ? ArrowUp : ArrowDown;
   return (
-    <th scope="col" aria-sort={active ? (f.dir === "asc" ? "ascending" : "descending") : "none"} className="px-4 py-3 text-left font-semibold">
-      <Link href={`/admin/leads${filtersToQuery(f, { sort: col, dir: nextDir, page: 1 })}`} className="inline-flex items-center gap-1 hover:text-accent">
+    <th
+      scope="col"
+      aria-sort={active ? (f.dir === "asc" ? "ascending" : "descending") : "none"}
+      className="px-4 py-3 text-left font-semibold"
+    >
+      <Link
+        href={`/admin/leads${filtersToQuery(f, { sort: col, dir: nextDir, page: 1 })}`}
+        className="inline-flex items-center gap-1 hover:text-accent"
+      >
         {children}
         {active && <Icon aria-hidden="true" className="size-3.5" />}
       </Link>
@@ -61,19 +68,35 @@ export default async function LeadsPage(props: PageProps<"/admin/leads">) {
         title="Leads"
         description={`${total} ${total === 1 ? "lead" : "leads"}${filtered ? " match your filters" : ""}`}
         actions={
-          <a href={`/api/admin/leads/export${filtersToQuery(f, { page: 1 })}`} className={buttonClasses("outline", "sm")}>
+          <a
+            href={`/api/admin/leads/export${filtersToQuery(f, { page: 1 })}`}
+            className={buttonClasses("outline", "sm")}
+          >
             <Download aria-hidden="true" className="size-4" /> Export CSV
           </a>
         }
       />
 
-      <form action="/admin/leads" className="card mb-5 grid gap-3 p-4 sm:grid-cols-2 lg:grid-cols-[2fr_repeat(3,1fr)_auto_auto_auto]">
+      <form
+        action="/admin/leads"
+        className="card mb-5 grid gap-3 p-4 sm:grid-cols-2 lg:grid-cols-[2fr_repeat(3,1fr)_auto_auto_auto]"
+      >
         <div className="relative sm:col-span-2 lg:col-span-1">
           <label htmlFor="q" className="sr-only">
             Search
           </label>
-          <Search aria-hidden="true" className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted" />
-          <input id="q" name="q" type="search" defaultValue={f.q} placeholder="Name, email, company, details" className={cn(selectClass, "w-full pl-9")} />
+          <Search
+            aria-hidden="true"
+            className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted"
+          />
+          <input
+            id="q"
+            name="q"
+            type="search"
+            defaultValue={f.q}
+            placeholder="Name, email, company, details"
+            className={cn(selectClass, "w-full pl-9")}
+          />
         </div>
         <label className="sr-only" htmlFor="status">
           Status
@@ -135,7 +158,11 @@ export default async function LeadsPage(props: PageProps<"/admin/leads">) {
       </form>
 
       {leads.length === 0 ? (
-        <EmptyState>{filtered ? "No leads match these filters." : "No leads yet. They will appear here when someone sends the quote form."}</EmptyState>
+        <EmptyState>
+          {filtered
+            ? "No leads match these filters."
+            : "No leads yet. They will appear here when someone sends the quote form."}
+        </EmptyState>
       ) : (
         <div className="card overflow-x-auto">
           <table className="w-full min-w-[860px] text-[15px]">
@@ -174,15 +201,19 @@ export default async function LeadsPage(props: PageProps<"/admin/leads">) {
                     </span>
                   </td>
                   <td className="px-4 py-3">{l.service}</td>
-                  <td className="px-4 py-3 whitespace-nowrap">{l.budget ?? <span className="text-muted">-</span>}</td>
-                  <td className="px-4 py-3 text-sm text-muted">
-                    {l.utmSource ?? l.sourcePage ?? "-"}
+                  <td className="px-4 py-3 whitespace-nowrap">
+                    {l.budget ?? <span className="text-muted">-</span>}
                   </td>
+                  <td className="px-4 py-3 text-sm text-muted">{l.utmSource ?? l.sourcePage ?? "-"}</td>
                   <td className="px-4 py-3">
                     <StatusBadge status={l.status} label={statusLabels[l.status]} />
-                    {l._count.notes > 0 && <span className="ml-2 text-xs text-muted">{l._count.notes} notes</span>}
+                    {l._count.notes > 0 && (
+                      <span className="ml-2 text-xs text-muted">{l._count.notes} notes</span>
+                    )}
                   </td>
-                  <td className="px-4 py-3 text-sm whitespace-nowrap text-muted">{formatDateTime(l.createdAt)}</td>
+                  <td className="px-4 py-3 text-sm whitespace-nowrap text-muted">
+                    {formatDateTime(l.createdAt)}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -197,12 +228,18 @@ export default async function LeadsPage(props: PageProps<"/admin/leads">) {
           </span>
           <div className="flex gap-2">
             {f.page > 1 ? (
-              <Link href={`/admin/leads${filtersToQuery(f, { page: f.page - 1 })}`} className={buttonClasses("outline", "sm")}>
+              <Link
+                href={`/admin/leads${filtersToQuery(f, { page: f.page - 1 })}`}
+                className={buttonClasses("outline", "sm")}
+              >
                 Previous
               </Link>
             ) : null}
             {f.page < pages ? (
-              <Link href={`/admin/leads${filtersToQuery(f, { page: f.page + 1 })}`} className={buttonClasses("outline", "sm")}>
+              <Link
+                href={`/admin/leads${filtersToQuery(f, { page: f.page + 1 })}`}
+                className={buttonClasses("outline", "sm")}
+              >
                 Next
               </Link>
             ) : null}

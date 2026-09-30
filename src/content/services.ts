@@ -527,8 +527,7 @@ export const services: Service[] = [
       },
       {
         question: "Will moving to the cloud cause downtime?",
-        answer:
-          "We plan migrations to keep downtime to a minimum, usually outside your business hours.",
+        answer: "We plan migrations to keep downtime to a minimum, usually outside your business hours.",
       },
       {
         question: "Azure or AWS, which is better for me?",

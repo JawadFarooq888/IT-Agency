@@ -31,8 +31,11 @@ export default function ServicesPage() {
         </Link>
       </PageHero>
 
-      <section aria-label="All services" className="py-16 lg:py-24">
+      <section aria-labelledby="all-services" className="py-16 lg:py-24">
         <Container>
+          <h2 id="all-services" className="sr-only">
+            All services
+          </h2>
           <ServicesGrid />
         </Container>
       </section>

@@ -45,8 +45,8 @@ export function ServicesGrid() {
           </span>
           <h3 className="heading-3 mt-5 text-white">Have a custom idea?</h3>
           <p className="mt-2 flex-1 text-[15px] leading-relaxed text-white/75">
-            Not sure which service you need? Tell us the problem and we will suggest the simplest
-            way to solve it.
+            Not sure which service you need? Tell us the problem and we will suggest the simplest way to solve
+            it.
           </p>
           <Link href="/contact#quote" className={buttonClasses("light", "md", "mt-6 self-start")}>
             Let&apos;s talk <ArrowRight aria-hidden="true" className="size-4" />

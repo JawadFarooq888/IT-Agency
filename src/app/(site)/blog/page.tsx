@@ -46,8 +46,11 @@ export default async function BlogPage(props: PageProps<"/blog">) {
         description="Short, clear guides on websites, apps, AI and marketing. No jargon."
       />
 
-      <section aria-label="Articles" className="py-12 lg:py-20">
+      <section aria-labelledby="articles" className="py-12 lg:py-20">
         <Container>
+          <h2 id="articles" className="sr-only">
+            Articles
+          </h2>
           <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
             <nav aria-label="Blog categories">
               <ul className="flex flex-wrap gap-2">
@@ -60,7 +63,9 @@ export default async function BlogPage(props: PageProps<"/blog">) {
                         aria-current={active ? "page" : undefined}
                         className={cn(
                           "inline-flex min-h-11 items-center rounded-full border px-4 text-[15px] font-medium transition-colors",
-                          active ? "border-ink bg-ink text-white" : "border-line bg-card text-ink hover:border-ink/40",
+                          active
+                            ? "border-ink bg-ink text-white"
+                            : "border-line bg-card text-ink hover:border-ink/40",
                         )}
                       >
                         {c.name}
@@ -76,7 +81,10 @@ export default async function BlogPage(props: PageProps<"/blog">) {
                 Search articles
               </label>
               <div className="relative flex-1 lg:w-72">
-                <Search aria-hidden="true" className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted" />
+                <Search
+                  aria-hidden="true"
+                  className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted"
+                />
                 <input
                   id="blog-search"
                   type="search"

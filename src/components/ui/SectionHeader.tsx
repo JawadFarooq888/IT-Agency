@@ -20,13 +20,7 @@ export function SectionHeader({
   children?: React.ReactNode;
 }) {
   return (
-    <div
-      className={cn(
-        "max-w-2xl",
-        align === "center" && "mx-auto text-center",
-        className,
-      )}
-    >
+    <div className={cn("max-w-2xl", align === "center" && "mx-auto text-center", className)}>
       {eyebrow && <p className={cn("eyebrow", dark && "text-[#9DB4FF]")}>{eyebrow}</p>}
       <h2 id={id} className={cn("heading-2 mt-3", dark && "text-white")}>
         {title}

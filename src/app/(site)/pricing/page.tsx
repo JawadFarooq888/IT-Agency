@@ -82,7 +82,9 @@ export default function PricingPage() {
                     <p className={cn("mt-1 text-[15px]", p.popular ? "text-white/75" : "text-muted")}>
                       {p.description}
                     </p>
-                    <p className={cn("mt-6 text-sm", p.popular ? "text-white/75" : "text-muted")}>Starting from</p>
+                    <p className={cn("mt-6 text-sm", p.popular ? "text-white/75" : "text-muted")}>
+                      Starting from
+                    </p>
                     <p
                       className={cn(
                         "font-display text-4xl font-bold tracking-tight",
@@ -96,7 +98,10 @@ export default function PricingPage() {
                         <li key={f} className="flex items-start gap-3 text-[15px]">
                           <Check
                             aria-hidden="true"
-                            className={cn("mt-0.5 size-5 shrink-0", p.popular ? "text-[#9DB4FF]" : "text-tint-green-ink")}
+                            className={cn(
+                              "mt-0.5 size-5 shrink-0",
+                              p.popular ? "text-[#9DB4FF]" : "text-tint-green-ink",
+                            )}
                           />
                           <span className={p.popular ? "text-white/90" : "text-ink"}>{f}</span>
                         </li>

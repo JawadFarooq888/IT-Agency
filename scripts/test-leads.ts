@@ -14,8 +14,26 @@ async function main() {
   }
   await db.lead.createMany({
     data: [
-      { fullName: "Test Lead One", email: TAG, service: "Web Development", budget: "$2k to $10k", timeline: "1 month", details: "TEST: needs a new business website with booking.", phone: "+92 3001234567", sourcePage: "/", utmSource: "google" },
-      { fullName: "Test Lead Two", email: TAG, service: "AI & Automation", budget: "$500 to $2k", details: "TEST: wants a WhatsApp AI chatbot for leads.", status: "WON", sourcePage: "/services/ai-automation" },
+      {
+        fullName: "Test Lead One",
+        email: TAG,
+        service: "Web Development",
+        budget: "$2k to $10k",
+        timeline: "1 month",
+        details: "TEST: needs a new business website with booking.",
+        phone: "+92 3001234567",
+        sourcePage: "/",
+        utmSource: "google",
+      },
+      {
+        fullName: "Test Lead Two",
+        email: TAG,
+        service: "AI & Automation",
+        budget: "$500 to $2k",
+        details: "TEST: wants a WhatsApp AI chatbot for leads.",
+        status: "WON",
+        sourcePage: "/services/ai-automation",
+      },
     ],
   });
   console.log("Added 2 test leads");

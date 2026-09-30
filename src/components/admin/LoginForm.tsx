@@ -12,7 +12,10 @@ export function LoginForm({ next }: { next: string }) {
     <form action={action} className="mt-6 space-y-5">
       <input type="hidden" name="next" value={next} />
       {state.error && (
-        <p role="alert" className="flex gap-2 rounded-btn border border-red-200 bg-red-50 p-3 text-[15px] text-red-800">
+        <p
+          role="alert"
+          className="flex gap-2 rounded-btn border border-red-200 bg-red-50 p-3 text-[15px] text-red-800"
+        >
           <AlertCircle aria-hidden="true" className="mt-0.5 size-4 shrink-0" /> {state.error}
         </p>
       )}
