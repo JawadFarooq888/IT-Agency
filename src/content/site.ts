@@ -37,8 +37,8 @@ export type SiteSettings = {
 };
 
 export const defaultSettings: SiteSettings = {
-  whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "923000000000",
-  whatsappDisplay: "[+92 3XX XXXXXXX]",
+  whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "923354427428",
+  whatsappDisplay: "+92 335 4427428",
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "hello@yourbrand.com",
   calendlyUrl: process.env.NEXT_PUBLIC_CALENDLY_URL ?? "https://calendly.com/yourbrand/20min",
   location: "[City], Pakistan",
