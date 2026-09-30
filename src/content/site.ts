@@ -14,7 +14,7 @@ function siteUrl(): string {
 export const site = {
   name: "TechApp Solutions",
   /** Shown in the footer, legal pages and share images. Change when you buy your own domain. */
-  domain: "itagency.vercel.app",
+  domain: "it-agency-solutions.vercel.app",
   url: siteUrl(),
   tagline: "We build the websites, apps and AI tools that grow your business.",
   description:
