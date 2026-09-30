@@ -31,7 +31,7 @@ Company website for an IT services agency: web, mobile, desktop, UI/UX, AI and a
 - Home: hero with stats, trust strip, services grid, process, portfolio preview with filters, testimonials, why us, FAQ, contact section with the full quote form.
 - `/services` and 7 service pages (`/services/[slug]`), each with problems, deliverables, tech stack, process, related work, starting price, FAQs and a quote form with that service pre-selected.
 - `/portfolio` (filterable) and case studies (`/portfolio/[slug]`).
-- `/about`, `/pricing`, `/blog` (categories and search) with articles (`/blog/[slug]`: table of contents, reading time, related posts), `/contact` (form, Calendly embed, Google Map), `/privacy-policy`, `/terms`, custom 404.
+- `/about`, `/pricing`, `/blog` (categories and search) with articles (`/blog/[slug]`: table of contents, reading time, related posts), `/contact` (quote form, call booking form, Google Map), `/privacy-policy`, `/terms`, custom 404.
 - Floating WhatsApp button on every public page. On service pages its message names the service.
 
 **Lead capture**
@@ -41,7 +41,8 @@ Company website for an IT services agency: web, mobile, desktop, UI/UX, AI and a
 - Attachments (PDF, DOC, DOCX, PNG, JPG, up to 10MB) upload straight from the browser to Vercel Blob.
 - Each lead is saved with its source page, referrer and UTM tags.
 - You get an email notification with a one-click WhatsApp reply link. The client gets a branded auto-reply.
-- GA4 events: `quote_form_submit`, `whatsapp_click`, `email_click`, `calendly_open`.
+- "Book a call" opens a short booking form (date, time window in the visitor's time zone, note). Requests are saved as leads with the service "Consultation call", and both sides get an email.
+- GA4 events: `quote_form_submit`, `consultation_booked`, `book_call_open`, `whatsapp_click`, `email_click`.
 
 **Admin panel (`/admin`)**
 
@@ -148,7 +149,7 @@ Then log in at `/admin/login`.
 | Testimonials                                  | `/admin/testimonials` |
 | Blog posts                                    | `/admin/blog`         |
 | Home page FAQs                                | `/admin/faqs`         |
-| WhatsApp, email, Calendly, location, socials, hero stats | `/admin/settings` |
+| WhatsApp, email, location, socials, hero stats | `/admin/settings` |
 
 Changes appear on the website right away.
 
@@ -236,11 +237,11 @@ Email templates live in `src/emails/`. If emails fail, the lead is still saved a
 
 **Vercel Blob (file uploads).** Create it under Vercel → Storage as above. For local testing, copy `BLOB_READ_WRITE_TOKEN` from the store's settings into `.env`.
 
-**Google Analytics 4.** Create a GA4 property and a Web data stream. Copy the Measurement ID (`G-XXXXXXXXXX`) to `NEXT_PUBLIC_GA_ID`. To count leads as conversions, go to **GA4 → Admin → Events** and mark `quote_form_submit` as a key event. Also consider `whatsapp_click`, `email_click` and `calendly_open`.
+**Google Analytics 4.** Create a GA4 property and a Web data stream. Copy the Measurement ID (`G-XXXXXXXXXX`) to `NEXT_PUBLIC_GA_ID`. To count leads as conversions, go to **GA4 → Admin → Events** and mark `quote_form_submit` and `consultation_booked` as key events. Also consider `whatsapp_click`, `email_click` and `book_call_open`.
 
 **Google Search Console.** Add the property `https://techappsolutions.com` and choose the **HTML tag** method. Copy only the `content="..."` value into `NEXT_PUBLIC_GSC_VERIFICATION`, redeploy, and click Verify. Then submit `https://techappsolutions.com/sitemap.xml` under **Sitemaps**.
 
-**Calendly.** Set your event link in `/admin/settings` (or `NEXT_PUBLIC_CALENDLY_URL`). "Book a call" buttons open it as a popup, and `/contact` embeds it.
+**Call bookings.** "Book a call" buttons open a booking form. Requests appear in `/admin/leads` with the service "Consultation call" and the preferred date and time. Confirm the exact time with the client on WhatsApp or email.
 
 ---
 
@@ -320,7 +321,7 @@ next.config.ts           security headers, image settings
 Everything real is marked with `[square brackets]`. Search the project for `[` inside `src/content/` and the legal pages, and replace:
 
 - [ ] Company name (`src/content/site.ts`: `name`, `domain`) and logo (`Logo.tsx`, `icon.svg`)
-- [ ] WhatsApp number, email, Calendly link, location and social links (`/admin/settings`)
+- [ ] WhatsApp number, email, location and social links (`/admin/settings`)
 - [ ] Hero stats: projects delivered, Upwork rating (`/admin/settings`)
 - [ ] Prices in `src/content/services.ts` and `src/content/pricing.ts`
 - [ ] Real case studies with screenshots (`/admin/portfolio`), and delete the placeholder ones

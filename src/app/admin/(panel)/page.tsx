@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { db } from "@/lib/db";
 import { statusLabels, statusOrder } from "@/lib/leads";
 import { serviceOptions } from "@/content/services";
+import { CONSULTATION_SERVICE } from "@/lib/validations/booking";
 import { budgetOptions } from "@/lib/validations/quote";
 import { AdminHeader, EmptyState, StatusBadge } from "@/components/admin/ui";
 import { BarList } from "@/components/admin/BarList";
@@ -34,7 +35,7 @@ export default async function DashboardPage() {
     key: string,
   ) => rows.find((r) => (pick(r) ?? "Not set") === key)?._count._all ?? 0;
 
-  const serviceRows = serviceOptions
+  const serviceRows = [...serviceOptions, CONSULTATION_SERVICE]
     .map((s) => ({ label: s, value: count(byService, (r) => r.service, s) }))
     .sort((a, b) => b.value - a.value);
   const budgetRows = [...budgetOptions, "Not set"].map((b) => ({

@@ -28,7 +28,6 @@ export type SiteSettings = {
   whatsappNumber: string; // digits only, with country code, e.g. 923001234567
   whatsappDisplay: string; // how the number is shown on the site
   email: string;
-  calendlyUrl: string;
   location: string;
   mapQuery: string; // used for the Google Map embed on /contact
   social: {
@@ -49,7 +48,6 @@ export const defaultSettings: SiteSettings = {
   whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "923354427428",
   whatsappDisplay: "+92 335 4427428",
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "hello@techappsolutions.com",
-  calendlyUrl: process.env.NEXT_PUBLIC_CALENDLY_URL ?? "https://calendly.com/techappsolutions/20min",
   location: "[City], Pakistan",
   mapQuery: "Lahore, Pakistan",
   // Empty links are hidden. Add your real profile URLs here or in /admin/settings.

@@ -7,7 +7,7 @@ import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
 import { services } from "@/content/services";
 import { Container } from "@/components/ui/Container";
 import { Logo } from "@/components/ui/Logo";
-import { CalendlyButton } from "@/components/ui/CalendlyButton";
+import { BookCallButton } from "@/components/ui/BookCallButton";
 import { IconBadge } from "@/components/ui/IconBadge";
 import { buttonClasses } from "@/components/ui/button-styles";
 import { cn } from "@/lib/utils";
@@ -143,7 +143,7 @@ export function Navbar() {
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
-          <CalendlyButton className={buttonClasses("outline", "sm")}>Book a call</CalendlyButton>
+          <BookCallButton className={buttonClasses("outline", "sm")}>Book a call</BookCallButton>
           <Link href="/contact#quote" className={buttonClasses("primary", "sm")}>
             Get a free quote
           </Link>
@@ -206,7 +206,11 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   }, [open, handleKey]);
 
   return (
-    <div className={cn("fixed inset-0 z-[60] lg:hidden", !open && "pointer-events-none")} aria-hidden={!open}>
+    // overflow-hidden clips the off-screen panel, so phones don't widen the page to fit it
+    <div
+      className={cn("fixed inset-0 z-[60] overflow-hidden lg:hidden", !open && "pointer-events-none")}
+      aria-hidden={!open}
+    >
       <div
         className={cn(
           "absolute inset-0 bg-ink/40 transition-opacity duration-300",
@@ -283,7 +287,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
           <Link href="/contact#quote" onClick={onClose} className={buttonClasses("primary", "md", "w-full")}>
             Get a free quote
           </Link>
-          <CalendlyButton className={buttonClasses("outline", "md", "w-full")}>Book a call</CalendlyButton>
+          <BookCallButton className={buttonClasses("outline", "md", "w-full")}>Book a call</BookCallButton>
         </div>
       </div>
     </div>

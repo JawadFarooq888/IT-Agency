@@ -18,7 +18,8 @@ export type AutoReplyData = {
   brandName: string;
   siteUrl: string;
   whatsappUrl: string;
-  calendlyUrl: string;
+  /** Link to the booking form on the contact page */
+  bookCallUrl: string;
 };
 
 /** Branded auto-reply sent to the person who filled in the quote form. */
@@ -45,7 +46,7 @@ export function ClientAutoReplyEmail(d: AutoReplyData) {
             <Button href={d.whatsappUrl} style={{ ...button(colors.whatsapp), marginRight: "8px" }}>
               Chat on WhatsApp
             </Button>
-            <Button href={d.calendlyUrl} style={button(colors.accent)}>
+            <Button href={d.bookCallUrl} style={button(colors.accent)}>
               Book a call
             </Button>
           </Section>

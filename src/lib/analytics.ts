@@ -1,4 +1,5 @@
-export type AnalyticsEvent = "quote_form_submit" | "whatsapp_click" | "email_click" | "calendly_open";
+export type AnalyticsEvent =
+  "quote_form_submit" | "whatsapp_click" | "email_click" | "book_call_open" | "consultation_booked";
 
 type Gtag = (command: "event", name: string, params?: Record<string, unknown>) => void;
 

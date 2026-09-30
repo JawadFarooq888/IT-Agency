@@ -1,6 +1,6 @@
 import { ArrowRight, CalendarDays, Mail } from "lucide-react";
 import type { SiteSettings } from "@/content/site";
-import { CalendlyButton } from "@/components/ui/CalendlyButton";
+import { BookCallButton } from "@/components/ui/BookCallButton";
 import { EmailLink, WhatsAppLink } from "@/components/ui/TrackedLinks";
 import { WhatsAppIcon } from "@/components/ui/BrandIcons";
 
@@ -44,16 +44,16 @@ export function ContactCards({ settings, service }: { settings: SiteSettings; se
         </EmailLink>
       </li>
       <li>
-        <CalendlyButton className={cardClass}>
+        <BookCallButton className={`${cardClass} w-full text-left`}>
           <span className="grid size-12 shrink-0 place-items-center rounded-xl bg-tint-orange text-tint-orange-ink">
             <CalendarDays aria-hidden="true" className="size-6" />
           </span>
           <span className="min-w-0">
             <span className="block font-semibold text-ink">Book a call</span>
-            <span className="block text-[15px] text-muted">Free 20 minute video call</span>
+            <span className="block text-[15px] text-muted">Free 20 minute call, you pick the time</span>
           </span>
           <Arrow />
-        </CalendlyButton>
+        </BookCallButton>
       </li>
     </ul>
   );

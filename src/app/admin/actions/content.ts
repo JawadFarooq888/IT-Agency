@@ -315,7 +315,6 @@ export async function saveSettings(_prev: FormState, formData: FormData): Promis
     whatsappNumber: str(formData.get("whatsappNumber")).replace(/\D/g, ""),
     whatsappDisplay: str(formData.get("whatsappDisplay")),
     email: str(formData.get("email")),
-    calendlyUrl: str(formData.get("calendlyUrl")),
     location: str(formData.get("location")),
     mapQuery: str(formData.get("mapQuery")),
     social: {

@@ -324,7 +324,8 @@ export function QuoteForm({
               id={ids.country}
               aria-label="Country code"
               autoComplete="tel-country-code"
-              className={cn(inputClass, "w-[108px] shrink-0 px-3")}
+              // "!" overrides w-full and px-4 from inputClass
+              className={cn(inputClass, "w-[108px]! shrink-0 px-3!")}
               {...register("phoneCountry")}
             >
               {countryCodes.map((c) => (
@@ -338,7 +339,7 @@ export function QuoteForm({
               type="tel"
               autoComplete="tel-national"
               inputMode="tel"
-              className={inputClass}
+              className={cn(inputClass, "min-w-0")}
               aria-invalid={!!errors.phone}
               aria-describedby={errors.phone ? err("phone") : undefined}
               {...register("phone")}

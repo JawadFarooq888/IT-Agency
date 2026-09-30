@@ -9,7 +9,7 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { IconBadge } from "@/components/ui/IconBadge";
 import { Reveal } from "@/components/ui/Reveal";
 import { buttonClasses } from "@/components/ui/button-styles";
-import { CalendlyButton } from "@/components/ui/CalendlyButton";
+import { BookCallButton } from "@/components/ui/BookCallButton";
 import { LinkedInIcon } from "@/components/ui/BrandIcons";
 import { PageHero } from "@/components/sections/PageHero";
 import { CtaBanner } from "@/components/sections/CtaBanner";
@@ -82,9 +82,9 @@ export default async function AboutPage() {
               ))}
             </div>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <CalendlyButton className={buttonClasses("primary", "lg")}>
+              <BookCallButton className={buttonClasses("primary", "lg")}>
                 <CalendarDays aria-hidden="true" className="size-5" /> Book a call with {firstName}
-              </CalendlyButton>
+              </BookCallButton>
               {settings.social.linkedin && (
                 <a
                   href={settings.social.linkedin}

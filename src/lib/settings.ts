@@ -12,7 +12,6 @@ export const siteSettingsSchema = z.object({
     .regex(/^\d{8,15}$/, "Digits only, with country code, e.g. 923001234567"),
   whatsappDisplay: z.string().trim().min(1).max(40),
   email: z.email().max(200),
-  calendlyUrl: z.url().max(300),
   location: z.string().trim().min(1).max(120),
   mapQuery: z.string().trim().min(1).max(200),
   social: z.object({

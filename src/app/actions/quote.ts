@@ -164,7 +164,7 @@ export async function submitQuote(rawValues: unknown, rawMeta: unknown): Promise
         brandName: site.name,
         siteUrl: site.domain,
         whatsappUrl: whatsappUrl(settings.whatsappNumber, whatsappMessage(serviceForMessage)),
-        calendlyUrl: settings.calendlyUrl,
+        bookCallUrl: absoluteUrl("/contact#book"),
       }),
     }),
   ]);

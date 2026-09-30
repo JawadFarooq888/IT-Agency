@@ -1,4 +1,4 @@
-// Local testing helper: `npx tsx scripts/test-leads.ts add|remove`
+// Local testing helper: `npx tsx scripts/test-leads.ts add|list|remove`
 import "dotenv/config";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/generated/prisma/client";
@@ -10,6 +10,15 @@ async function main() {
   if (process.argv[2] === "remove") {
     const { count } = await db.lead.deleteMany({ where: { email: TAG } });
     console.log(`Removed ${count} test leads`);
+    return;
+  }
+  if (process.argv[2] === "list") {
+    const leads = await db.lead.findMany({
+      where: { email: TAG },
+      orderBy: { createdAt: "asc" },
+      select: { fullName: true, service: true, timeline: true, phone: true, sourcePage: true, details: true },
+    });
+    for (const l of leads) console.log(l);
     return;
   }
   await db.lead.createMany({

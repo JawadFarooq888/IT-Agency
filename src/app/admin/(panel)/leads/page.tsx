@@ -14,6 +14,7 @@ import {
   type LeadSort,
 } from "@/lib/leads";
 import { serviceOptions } from "@/content/services";
+import { CONSULTATION_SERVICE } from "@/lib/validations/booking";
 import { budgetOptions } from "@/lib/validations/quote";
 import { cn } from "@/lib/utils";
 import { buttonClasses } from "@/components/ui/button-styles";
@@ -114,7 +115,7 @@ export default async function LeadsPage(props: PageProps<"/admin/leads">) {
         </label>
         <select id="service" name="service" defaultValue={f.service} className={selectClass}>
           <option value="">All services</option>
-          {serviceOptions.map((s) => (
+          {[...serviceOptions, CONSULTATION_SERVICE].map((s) => (
             <option key={s} value={s}>
               {s}
             </option>

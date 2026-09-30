@@ -68,7 +68,6 @@ export default async function PrivacyPolicyPage() {
             <li>[Resend] (email delivery)</li>
             <li>[Google Analytics] (website analytics)</li>
             <li>[Cloudflare Turnstile] (spam protection)</li>
-            <li>[Calendly] (call booking)</li>
           </ul>
 
           <h2>How long we keep data</h2>

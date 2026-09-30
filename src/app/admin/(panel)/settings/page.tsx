@@ -31,13 +31,6 @@ export default async function SettingsPage() {
             hint="e.g. +92 300 1234567"
           />
           <TextField name="email" label="Email" type="email" defaultValue={s.email} required />
-          <TextField
-            name="calendlyUrl"
-            label="Calendly link"
-            type="url"
-            defaultValue={s.calendlyUrl}
-            required
-          />
           <TextField name="location" label="Location" defaultValue={s.location} required />
           <TextField
             name="mapQuery"

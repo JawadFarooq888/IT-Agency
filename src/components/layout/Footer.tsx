@@ -4,7 +4,7 @@ import { services } from "@/content/services";
 import { site, type SiteSettings } from "@/content/site";
 import { Container } from "@/components/ui/Container";
 import { Logo } from "@/components/ui/Logo";
-import { CalendlyButton } from "@/components/ui/CalendlyButton";
+import { BookCallButton } from "@/components/ui/BookCallButton";
 import { EmailLink, WhatsAppLink } from "@/components/ui/TrackedLinks";
 import {
   FacebookIcon,
@@ -100,10 +100,10 @@ export function Footer({ settings }: { settings: SiteSettings }) {
                 </EmailLink>
               </li>
               <li>
-                <CalendlyButton className={`${linkClass} gap-3`}>
+                <BookCallButton className={`${linkClass} gap-3`}>
                   <CalendarDays aria-hidden="true" className="size-[18px] shrink-0" />
-                  Book a 20 minute call
-                </CalendlyButton>
+                  Book a free call
+                </BookCallButton>
               </li>
               <li className="flex min-h-11 items-center gap-3 text-white/75 md:min-h-9">
                 <MapPin aria-hidden="true" className="size-[18px] shrink-0" />

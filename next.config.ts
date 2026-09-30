@@ -4,17 +4,17 @@ const isDev = process.env.NODE_ENV !== "production";
 
 /**
  * Content Security Policy. Only the third parties the site uses are allowed:
- * Google Analytics, Cloudflare Turnstile, Calendly, Google Maps and Vercel Blob.
+ * Google Analytics, Cloudflare Turnstile, Google Maps and Vercel Blob.
  * Next.js needs 'unsafe-inline' scripts unless every page is rendered with nonces.
  */
 const csp = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} https://www.googletagmanager.com https://challenges.cloudflare.com https://assets.calendly.com`,
-  "style-src 'self' 'unsafe-inline' https://assets.calendly.com",
+  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} https://www.googletagmanager.com https://challenges.cloudflare.com`,
+  "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https:",
   "font-src 'self' data:",
   `connect-src 'self'${isDev ? " ws: wss:" : ""} https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://vercel.com https://*.blob.vercel-storage.com https://challenges.cloudflare.com`,
-  "frame-src https://calendly.com https://*.calendly.com https://www.google.com https://challenges.cloudflare.com",
+  "frame-src https://www.google.com https://challenges.cloudflare.com",
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "form-action 'self'",
