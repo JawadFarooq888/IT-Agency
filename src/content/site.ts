@@ -54,7 +54,7 @@ export const defaultSettings: SiteSettings = {
   mapQuery: "Lahore, Pakistan",
   // Empty links are hidden. Add your real profile URLs here or in /admin/settings.
   social: {
-    linkedin: "",
+    linkedin: "https://www.linkedin.com/in/jawad-farooq-5755731ab",
     facebook: "",
     instagram: "",
     upwork: "",
