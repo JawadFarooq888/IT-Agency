@@ -1,4 +1,4 @@
-# YourBrand website
+# TechApp Solutions website
 
 Company website for an IT services agency: web, mobile, desktop, UI/UX, AI and automation, database and cloud, and social media and SEO. The main goal is leads. Every page points visitors to the quote form, WhatsApp, email or a booked call.
 
@@ -121,7 +121,7 @@ The seed script creates one admin from your environment variables:
 
 ```bash
 # in .env
-ADMIN_SEED_EMAIL="you@yourbrand.com"
+ADMIN_SEED_EMAIL="you@techappsolutions.com"
 ADMIN_SEED_PASSWORD="a-long-unique-password"     # at least 10 characters
 ADMIN_SEED_NAME="Your Name"
 
@@ -178,7 +178,7 @@ Changes appear on the website right away.
    - The build command in `package.json` is `prisma generate && next build`.
 3. **Storage → Create → Blob.** Connect it to the project. This adds `BLOB_READ_WRITE_TOKEN` automatically.
 4. Under **Settings → Environment Variables**, add everything from `.env.example`:
-   - `NEXT_PUBLIC_SITE_URL` = `https://yourbrand.com` (your real domain, no trailing slash)
+   - `NEXT_PUBLIC_SITE_URL` = `https://techappsolutions.com` (your real domain, no trailing slash)
    - `DATABASE_URL`, `DIRECT_URL`, `AUTH_SECRET`
    - `RESEND_API_KEY`, `EMAIL_FROM`, `ADMIN_EMAIL`
    - `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY`
@@ -197,13 +197,13 @@ After changing an environment variable, redeploy it under **Deployments → ⋯ 
 
 ## Connecting your custom domain
 
-1. In Vercel, open **Project → Settings → Domains**, add `yourbrand.com`, then add `www.yourbrand.com` and redirect it to `yourbrand.com` (or the other way round).
+1. In Vercel, open **Project → Settings → Domains**, add `techappsolutions.com`, then add `www.techappsolutions.com` and redirect it to `techappsolutions.com` (or the other way round).
 2. Vercel shows the DNS records to create. At your domain registrar (Namecheap, GoDaddy, Cloudflare and so on):
-   - Root domain `yourbrand.com`: an **A** record to the IP Vercel shows (currently `76.76.21.21`).
+   - Root domain `techappsolutions.com`: an **A** record to the IP Vercel shows (currently `76.76.21.21`).
    - `www`: a **CNAME** record to the value Vercel shows (for example `cname.vercel-dns.com`).
    - Or switch the domain's nameservers to Vercel's, if you prefer.
 3. Wait until the domain shows **Valid Configuration** (usually minutes, sometimes a few hours). HTTPS is set up automatically.
-4. Set `NEXT_PUBLIC_SITE_URL=https://yourbrand.com` in Vercel and redeploy. Canonical URLs, the sitemap and email links use it.
+4. Set `NEXT_PUBLIC_SITE_URL=https://techappsolutions.com` in Vercel and redeploy. Canonical URLs, the sitemap and email links use it.
 
 ---
 
@@ -211,18 +211,18 @@ After changing an environment variable, redeploy it under **Deployments → ⋯ 
 
 Until your domain is verified, Resend only lets you send test emails to your own address from `onboarding@resend.dev`.
 
-1. Create an account at [resend.com](https://resend.com) and go to **Domains → Add Domain**. Enter `yourbrand.com`, or a subdomain such as `mail.yourbrand.com`.
+1. Create an account at [resend.com](https://resend.com) and go to **Domains → Add Domain**. Enter `techappsolutions.com`, or a subdomain such as `mail.techappsolutions.com`.
 2. Resend shows DNS records, usually:
    - an **MX** record and a **TXT (SPF)** record for a `send` subdomain
    - a **TXT (DKIM)** record `resend._domainkey`
    - optional: a **TXT (DMARC)** record `_dmarc` with `v=DMARC1; p=none;`
-3. Add them at your DNS provider exactly as shown. If your DNS is on Vercel, add them under **Vercel → Domains → yourbrand.com → DNS Records**.
+3. Add them at your DNS provider exactly as shown. If your DNS is on Vercel, add them under **Vercel → Domains → techappsolutions.com → DNS Records**.
 4. Click **Verify** in Resend and wait until the status is **Verified**.
 5. Create an API key (**API Keys → Create**, "Sending access") and set:
    ```
    RESEND_API_KEY="re_..."
-   EMAIL_FROM="YourBrand <hello@yourbrand.com>"
-   ADMIN_EMAIL="you@yourbrand.com"
+   EMAIL_FROM="TechApp Solutions <hello@techappsolutions.com>"
+   ADMIN_EMAIL="you@techappsolutions.com"
    ```
 6. Test it: send the quote form. You get the lead notification, and the address in the form gets the auto-reply.
 
@@ -238,7 +238,7 @@ Email templates live in `src/emails/`. If emails fail, the lead is still saved a
 
 **Google Analytics 4.** Create a GA4 property and a Web data stream. Copy the Measurement ID (`G-XXXXXXXXXX`) to `NEXT_PUBLIC_GA_ID`. To count leads as conversions, go to **GA4 → Admin → Events** and mark `quote_form_submit` as a key event. Also consider `whatsapp_click`, `email_click` and `calendly_open`.
 
-**Google Search Console.** Add the property `https://yourbrand.com` and choose the **HTML tag** method. Copy only the `content="..."` value into `NEXT_PUBLIC_GSC_VERIFICATION`, redeploy, and click Verify. Then submit `https://yourbrand.com/sitemap.xml` under **Sitemaps**.
+**Google Search Console.** Add the property `https://techappsolutions.com` and choose the **HTML tag** method. Copy only the `content="..."` value into `NEXT_PUBLIC_GSC_VERIFICATION`, redeploy, and click Verify. Then submit `https://techappsolutions.com/sitemap.xml` under **Sitemaps**.
 
 **Calendly.** Set your event link in `/admin/settings` (or `NEXT_PUBLIC_CALENDLY_URL`). "Book a call" buttons open it as a popup, and `/contact` embeds it.
 

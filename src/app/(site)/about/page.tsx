@@ -17,7 +17,7 @@ import { CtaBanner } from "@/components/sections/CtaBanner";
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "Meet the team behind YourBrand. We help small businesses and startups grow with websites, apps, AI tools and digital marketing.",
+    "Meet the team behind TechApp Solutions. We help small businesses and startups grow with websites, apps, AI tools and digital marketing.",
   alternates: { canonical: "/about" },
 };
 

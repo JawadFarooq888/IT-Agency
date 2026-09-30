@@ -1,3 +1,5 @@
+import { site } from "@/content/site";
+
 export function cn(...classes: Array<string | false | null | undefined>): string {
   return classes.filter(Boolean).join(" ");
 }
@@ -15,6 +17,5 @@ export function whatsappMessage(serviceName?: string): string {
 }
 
 export function absoluteUrl(path = "/"): string {
-  const base = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, "");
-  return `${base}${path.startsWith("/") ? path : `/${path}`}`;
+  return `${site.url}${path.startsWith("/") ? path : `/${path}`}`;
 }

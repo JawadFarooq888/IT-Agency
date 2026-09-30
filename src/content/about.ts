@@ -3,7 +3,7 @@ import type { Tint } from "./services";
 
 /** About page content. Replace [placeholders] with your real story and team. */
 export const story = [
-  "[YourBrand] started in [2020] when Jawad Farooq began building websites for local businesses in [City]. Clients kept asking for more: a mobile app, a better way to manage orders, help with Google and social media.",
+  "TechApp Solutions started in [2020] when Jawad Farooq began building websites for local businesses in [City]. Clients kept asking for more: a mobile app, a better way to manage orders, help with Google and social media.",
   "Today we are a small team of [X] developers, designers and marketers. We work with small and medium businesses and startups in the US, UK, UAE and Pakistan, and we keep the same simple promise: clear prices, honest advice and work that helps you grow.",
 ];
 

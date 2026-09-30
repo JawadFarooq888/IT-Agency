@@ -3,10 +3,19 @@
  * placeholders you must replace. Contact details, social links and stats
  * can also be changed later from /admin/settings without touching code.
  */
+/** Public URL: NEXT_PUBLIC_SITE_URL, else the Vercel production URL, else localhost. */
+function siteUrl(): string {
+  if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "");
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL)
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+  return "http://localhost:3000";
+}
+
 export const site = {
-  name: "YourBrand",
-  domain: "yourbrand.com",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  name: "TechApp Solutions",
+  /** Shown in the footer, legal pages and share images. Change when you buy your own domain. */
+  domain: "itagency.vercel.app",
+  url: siteUrl(),
   tagline: "We build the websites, apps and AI tools that grow your business.",
   description:
     "Web development, mobile apps, AI automation, cloud and digital marketing for small and medium businesses and startups. Fixed price quotes and replies within 24 hours.",
@@ -39,15 +48,16 @@ export type SiteSettings = {
 export const defaultSettings: SiteSettings = {
   whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "923354427428",
   whatsappDisplay: "+92 335 4427428",
-  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "hello@yourbrand.com",
-  calendlyUrl: process.env.NEXT_PUBLIC_CALENDLY_URL ?? "https://calendly.com/yourbrand/20min",
+  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "hello@techappsolutions.com",
+  calendlyUrl: process.env.NEXT_PUBLIC_CALENDLY_URL ?? "https://calendly.com/techappsolutions/20min",
   location: "[City], Pakistan",
   mapQuery: "Lahore, Pakistan",
+  // Empty links are hidden. Add your real profile URLs here or in /admin/settings.
   social: {
-    linkedin: "https://www.linkedin.com/company/yourbrand",
-    facebook: "https://www.facebook.com/yourbrand",
-    instagram: "https://www.instagram.com/yourbrand",
-    upwork: "https://www.upwork.com/agencies/yourbrand",
+    linkedin: "",
+    facebook: "",
+    instagram: "",
+    upwork: "",
   },
   stats: {
     projects: "[50+]",

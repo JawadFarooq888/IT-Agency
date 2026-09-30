@@ -6,8 +6,8 @@ import type { ReactElement } from "react";
 const apiKey = process.env.RESEND_API_KEY;
 const resend = apiKey ? new Resend(apiKey) : null;
 
-/** Verified sender, e.g. "YourBrand <hello@yourbrand.com>" */
-const from = process.env.EMAIL_FROM ?? "YourBrand <onboarding@resend.dev>";
+/** Verified sender, e.g. "TechApp Solutions <hello@techappsolutions.com>" */
+const from = process.env.EMAIL_FROM ?? "TechApp Solutions <onboarding@resend.dev>";
 
 export async function sendEmail(opts: {
   to: string | string[];
