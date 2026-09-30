@@ -17,8 +17,8 @@ export function ServicesGrid() {
           >
             <IconBadge icon={s.icon} tint={s.tint} />
             <h3 className="heading-3 mt-5">{s.title}</h3>
-            <p className="mt-2 flex-1 text-[15px] leading-relaxed">{s.benefit}</p>
-            <ul className="mt-5 flex flex-wrap gap-1.5" aria-label="Technologies">
+            <p className="mt-2 text-[15px] leading-relaxed">{s.benefit}</p>
+            <ul className="mt-5 flex flex-1 flex-wrap content-start gap-1.5" aria-label="Technologies">
               {s.tags.slice(0, 4).map((t) => (
                 <li
                   key={t}

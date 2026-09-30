@@ -96,4 +96,5 @@ export const quoteMetaSchema = z.object({
 export type QuoteMeta = z.infer<typeof quoteMetaSchema>;
 
 export type QuoteResult =
-  { ok: true } | { ok: false; error: string; fieldErrors?: Partial<Record<keyof QuoteFormInput, string>> };
+  | { ok: true; /** True when the auto-reply email reached Resend */ confirmationSent?: boolean }
+  | { ok: false; error: string; fieldErrors?: Partial<Record<keyof QuoteFormInput, string>> };

@@ -169,6 +169,7 @@ export async function submitQuote(rawValues: unknown, rawMeta: unknown): Promise
     }),
   ]);
   for (const r of results) if (r.status === "rejected") console.error("[quote] email failed", r.reason);
+  const autoReply = results[1];
 
-  return { ok: true };
+  return { ok: true, confirmationSent: autoReply.status === "fulfilled" && autoReply.value.ok };
 }

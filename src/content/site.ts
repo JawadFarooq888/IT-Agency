@@ -47,9 +47,9 @@ export type SiteSettings = {
 export const defaultSettings: SiteSettings = {
   whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "923354427428",
   whatsappDisplay: "+92 335 4427428",
-  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "hello@techappsolutions.com",
-  location: "[City], Pakistan",
-  mapQuery: "Lahore, Pakistan",
+  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "jawadbuu888@gmail.com",
+  location: "Islamabad, Pakistan",
+  mapQuery: "Islamabad, Pakistan",
   // Empty links are hidden. Add your real profile URLs here or in /admin/settings.
   social: {
     linkedin: "https://www.linkedin.com/in/jawad-farooq-5755731ab",

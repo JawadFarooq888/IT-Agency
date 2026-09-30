@@ -38,7 +38,7 @@ export function Hero({ settings }: { settings: SiteSettings }) {
           </div>
           <dl className="mt-10 grid max-w-lg grid-cols-3 gap-4 border-t border-line pt-8">
             {stats.map((s) => (
-              <div key={s.label} className="flex flex-col-reverse">
+              <div key={s.label} className="flex flex-col-reverse justify-end">
                 <dt className="mt-1 text-sm text-muted">{s.label}</dt>
                 <dd className="font-display text-2xl font-bold tracking-tight text-ink md:text-[32px]">
                   {s.value}

@@ -107,6 +107,7 @@ export function QuoteForm({
   const [turnstileReset, setTurnstileReset] = useState(0);
   const [submittedName, setSubmittedName] = useState("");
   const [submittedService, setSubmittedService] = useState<string | undefined>();
+  const [confirmationSent, setConfirmationSent] = useState(false);
 
   const {
     register,
@@ -195,6 +196,7 @@ export function QuoteForm({
       trackEvent("quote_form_submit", { service: values.service, budget: values.budget ?? "not set" });
       setSubmittedName(values.fullName.split(" ")[0] ?? "");
       setSubmittedService(values.service === "Other" ? undefined : values.service);
+      setConfirmationSent(Boolean(result.confirmationSent));
       setStatus("success");
       reset();
       clearFile();
@@ -223,8 +225,9 @@ export function QuoteForm({
           Thanks{submittedName ? `, ${submittedName}` : ""}! Your request is in.
         </Heading>
         <p className="mt-3 max-w-md text-lg">
-          We will reply within 24 hours. We also sent a confirmation to your email. Want a faster answer?
-          Message us on WhatsApp now.
+          We will reply within 24 hours.
+          {confirmationSent && " We also sent a confirmation to your email."} Want a faster answer? Message us
+          on WhatsApp now.
         </p>
         <WhatsAppLink service={submittedService} className={buttonClasses("whatsapp", "lg", "mt-8")}>
           <WhatsAppIcon className="size-5" /> Chat on WhatsApp now

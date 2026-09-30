@@ -56,7 +56,7 @@ export default async function DashboardPage() {
 
       <dl className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         {tiles.map((t) => (
-          <div key={t.label} className="card flex flex-col-reverse p-5">
+          <div key={t.label} className="card flex flex-col-reverse justify-end p-5">
             <dt className="mt-1 text-sm text-muted">
               {t.label}
               {t.hint && <span className="block text-xs">{t.hint}</span>}

@@ -104,7 +104,7 @@ export default async function AboutPage() {
         <Container>
           <dl className="grid grid-cols-2 gap-8 md:grid-cols-4">
             {numbers.map((n) => (
-              <div key={n.label} className="flex flex-col-reverse text-center">
+              <div key={n.label} className="flex flex-col-reverse justify-end text-center">
                 <dt className="mt-1 text-[15px] text-muted">{n.label}</dt>
                 <dd className="font-display text-4xl font-bold tracking-tight text-ink">{n.value}</dd>
               </div>
