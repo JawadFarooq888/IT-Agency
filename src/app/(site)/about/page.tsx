@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, UserRound } from "lucide-react";
-import { mission, story, team, values } from "@/content/about";
+import { ArrowRight, CalendarDays, UserRound } from "lucide-react";
+import { founder, mission, story, team, values } from "@/content/about";
 import { getSiteSettings } from "@/lib/settings";
 import { Container } from "@/components/ui/Container";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { IconBadge } from "@/components/ui/IconBadge";
 import { Reveal } from "@/components/ui/Reveal";
 import { buttonClasses } from "@/components/ui/button-styles";
+import { CalendlyButton } from "@/components/ui/CalendlyButton";
+import { LinkedInIcon } from "@/components/ui/BrandIcons";
 import { PageHero } from "@/components/sections/PageHero";
 import { CtaBanner } from "@/components/sections/CtaBanner";
 
@@ -21,6 +23,7 @@ export const metadata: Metadata = {
 
 export default async function AboutPage() {
   const settings = await getSiteSettings();
+  const firstName = founder.name.split(" ")[0];
   const numbers = [
     { value: settings.stats.projects, label: "Projects delivered" },
     { value: settings.stats.rating, label: "Upwork rating" },
@@ -52,6 +55,47 @@ export default async function AboutPage() {
             <p className="mt-4 font-display text-2xl leading-snug font-semibold text-white md:text-3xl">
               {mission}
             </p>
+          </div>
+        </Container>
+      </section>
+
+      <section aria-labelledby="founder-title" className="pb-16 lg:pb-24">
+        <Container className="grid items-center gap-10 md:grid-cols-[minmax(0,380px)_1fr] lg:gap-16">
+          <div className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-card border border-line bg-canvas md:max-w-none">
+            <Image
+              src={founder.photo}
+              alt={`${founder.name}, ${founder.role}`}
+              fill
+              sizes="(min-width: 768px) 380px, 90vw"
+              className="object-cover object-top"
+            />
+          </div>
+          <div>
+            <p className="eyebrow">Meet the founder</p>
+            <h2 id="founder-title" className="heading-2 mt-3">
+              {founder.name}
+            </h2>
+            <p className="mt-2 text-lg font-medium text-accent">{founder.role}</p>
+            <div className="mt-6 space-y-4 text-lg leading-relaxed">
+              {founder.message.map((p) => (
+                <p key={p.slice(0, 20)}>{p}</p>
+              ))}
+            </div>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <CalendlyButton className={buttonClasses("primary", "lg")}>
+                <CalendarDays aria-hidden="true" className="size-5" /> Book a call with {firstName}
+              </CalendlyButton>
+              {settings.social.linkedin && (
+                <a
+                  href={settings.social.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={buttonClasses("outline", "lg")}
+                >
+                  <LinkedInIcon className="size-5" /> LinkedIn
+                </a>
+              )}
+            </div>
           </div>
         </Container>
       </section>
@@ -102,7 +146,7 @@ export default async function AboutPage() {
                       alt={`Photo of ${m.name}`}
                       fill
                       sizes="(min-width: 1024px) 300px, (min-width: 640px) 50vw, 100vw"
-                      className="object-cover"
+                      className="object-cover object-top"
                     />
                   ) : (
                     <div className="grid h-full place-items-center text-muted">

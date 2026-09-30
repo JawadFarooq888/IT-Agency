@@ -1,4 +1,5 @@
 import { site, type SiteSettings } from "@/content/site";
+import { founder } from "@/content/about";
 import { services } from "@/content/services";
 import type { FaqItem } from "@/content/faqs";
 import { absoluteUrl } from "@/lib/utils";
@@ -20,6 +21,12 @@ export function HomeJsonLd({ settings, faqs }: { settings: SiteSettings; faqs: F
           name: site.name,
           url,
           logo: absoluteUrl("/icon.svg"),
+          founder: {
+            "@type": "Person",
+            name: founder.name,
+            jobTitle: founder.role,
+            image: absoluteUrl(founder.photo),
+          },
           email: settings.email,
           telephone: `+${settings.whatsappNumber}`,
           sameAs,
