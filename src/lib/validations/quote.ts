@@ -22,7 +22,7 @@ export const countryIsoCodes = countryCodes.map((c) => c.iso) as [string, ...str
 
 /** Attachment rules, shared by the form and the upload endpoint. */
 export const attachmentRules = {
-  maxBytes: 10 * 1024 * 1024,
+  maxBytes: 4 * 1024 * 1024, // Vercel functions accept request bodies up to 4.5MB
   extensions: ["pdf", "doc", "docx", "png", "jpg", "jpeg"],
   contentTypes: [
     "application/pdf",
@@ -39,7 +39,7 @@ export function validateAttachment(file: { name: string; size: number; type: str
   if (!(attachmentRules.extensions as readonly string[]).includes(ext)) {
     return "Please upload a PDF, DOC, DOCX, PNG or JPG file.";
   }
-  if (file.size > attachmentRules.maxBytes) return "The file must be 10MB or smaller.";
+  if (file.size > attachmentRules.maxBytes) return "The file must be 4MB or smaller.";
   return null;
 }
 

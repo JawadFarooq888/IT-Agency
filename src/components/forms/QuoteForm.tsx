@@ -163,15 +163,12 @@ export function QuoteForm({
     try {
       if (file) {
         setStatus("uploading");
-        const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_").slice(-100);
-        // Loaded only when a file is attached, to keep the page light
-        const { upload } = await import("@vercel/blob/client");
-        const blob = await upload(`leads/${safeName}`, file, {
-          access: "public",
-          handleUploadUrl: "/api/upload",
-          contentType: file.type || undefined,
-        });
-        attachment = { url: blob.url, name: file.name.slice(0, 255), size: file.size };
+        const body = new FormData();
+        body.append("file", file);
+        const res = await fetch("/api/upload", { method: "POST", body });
+        const data = (await res.json().catch(() => ({}))) as { url?: string };
+        if (!res.ok || !data.url) throw new Error("Upload failed");
+        attachment = { url: data.url, name: file.name.slice(0, 255), size: file.size };
       }
     } catch {
       setStatus("idle");
@@ -461,7 +458,7 @@ export function QuoteForm({
               <Paperclip aria-hidden="true" className="size-4 shrink-0 text-muted" />
               <span>
                 <span className="font-semibold text-accent">Choose a file</span> · PDF, DOC, DOCX, PNG or JPG,
-                max 10MB
+                max 4MB
               </span>
               <input
                 ref={fileInputRef}

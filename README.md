@@ -38,7 +38,7 @@ Company website for an IT services agency: web, mobile, desktop, UI/UX, AI and a
 
 - One Zod schema validates the quote form in the browser and again in the server action.
 - Spam protection: hidden honeypot field, Cloudflare Turnstile, and a per-IP rate limit (5 requests per hour, stored as a hashed IP).
-- Attachments (PDF, DOC, DOCX, PNG, JPG, up to 10MB) upload straight from the browser to Vercel Blob.
+- Attachments (PDF, DOC, DOCX, PNG, JPG, up to 4MB) are saved to Vercel Blob by the server.
 - Each lead is saved with its source page, referrer and UTM tags.
 - You get an email notification with a one-click WhatsApp reply link. The client gets a branded auto-reply.
 - "Book a call" opens a short booking form (date, time window in the visitor's time zone, note). Requests are saved as leads with the service "Consultation call", and both sides get an email.
@@ -168,7 +168,7 @@ Changes appear on the website right away.
 
 **Logo:** replace the placeholder mark in `src/components/ui/Logo.tsx` and the icon in `src/app/icon.svg`.
 
-**Images:** upload them in the admin (needs Vercel Blob) or paste any `https://` image URL. Team photos go in `src/content/about.ts` (`photo: "/team/name.jpg"`, with the file in `public/team/`).
+**Images:** upload them in the admin (needs Vercel Blob) or paste any `https://` image URL. Team members, photos, titles, emails and phone numbers are edited in **Admin → Team**. Large photos are resized in the browser before upload.
 
 ---
 
@@ -177,7 +177,7 @@ Changes appear on the website right away.
 1. Push the code to GitHub (already done: `JawadFarooq888/IT-Agency`).
 2. On [vercel.com](https://vercel.com), click **Add New → Project** and import the repository. Vercel detects Next.js; keep the defaults.
    - The build command in `package.json` is `prisma generate && next build`.
-3. **Storage → Create → Blob.** Connect it to the project. This adds `BLOB_READ_WRITE_TOKEN` automatically.
+3. **Storage → Create → Blob**, with access set to **Public**. Connect it to the project. This adds `BLOB_STORE_ID`, which is enough on Vercel (uploads use Vercel's built-in OIDC login). `BLOB_READ_WRITE_TOKEN` also works if you have one.
 4. Under **Settings → Environment Variables**, add everything from `.env.example`:
    - `NEXT_PUBLIC_SITE_URL` = `https://techappsolutions.com` (your real domain, no trailing slash)
    - `DATABASE_URL`, `DIRECT_URL`, `AUTH_SECRET`
@@ -235,7 +235,7 @@ Email templates live in `src/emails/`. If emails fail, the lead is still saved a
 
 **Cloudflare Turnstile (spam protection).** In the Cloudflare dashboard, go to **Turnstile → Add widget**. Add your domain (and `localhost` for testing) and choose the "Managed" mode. Copy the site key to `NEXT_PUBLIC_TURNSTILE_SITE_KEY` and the secret to `TURNSTILE_SECRET_KEY`. Leave both empty to switch Turnstile off. The honeypot and rate limit still apply.
 
-**Vercel Blob (file uploads).** Create it under Vercel → Storage as above. For local testing, copy `BLOB_READ_WRITE_TOKEN` from the store's settings into `.env`.
+**Vercel Blob (file uploads).** Create it under Vercel → Storage as above. For local testing, run `vercel env pull` or copy a `BLOB_READ_WRITE_TOKEN` into `.env`.
 
 **Google Analytics 4.** Create a GA4 property and a Web data stream. Copy the Measurement ID (`G-XXXXXXXXXX`) to `NEXT_PUBLIC_GA_ID`. To count leads as conversions, go to **GA4 → Admin → Events** and mark `quote_form_submit` and `consultation_booked` as key events. Also consider `whatsapp_click`, `email_click` and `book_call_open`.
 
@@ -257,7 +257,7 @@ Every variable is listed and explained in [`.env.example`](.env.example). Summar
 | `ADMIN_SEED_EMAIL` / `ADMIN_SEED_PASSWORD` / `ADMIN_SEED_NAME`              | for seeding            | First admin user                                          |
 | `RESEND_API_KEY` / `EMAIL_FROM` / `ADMIN_EMAIL`                             | for emails             | Lead notification and auto-reply                          |
 | `NEXT_PUBLIC_TURNSTILE_SITE_KEY` / `TURNSTILE_SECRET_KEY`                   | recommended            | Spam protection                                           |
-| `BLOB_READ_WRITE_TOKEN`                                                     | for uploads            | Quote attachments and admin images                        |
+| `BLOB_STORE_ID` or `BLOB_READ_WRITE_TOKEN`                                  | for uploads            | Quote attachments and admin images                        |
 | `NEXT_PUBLIC_GA_ID` / `NEXT_PUBLIC_GSC_VERIFICATION`                        | optional               | Analytics and Search Console                              |
 | `NEXT_PUBLIC_WHATSAPP_NUMBER` / `NEXT_PUBLIC_CONTACT_EMAIL` / `NEXT_PUBLIC_CALENDLY_URL` | optional | Defaults until you save `/admin/settings`                 |
 | `ADMIN_TIMEZONE`                                                            | optional               | Time zone for dates in the admin (default `Asia/Karachi`) |

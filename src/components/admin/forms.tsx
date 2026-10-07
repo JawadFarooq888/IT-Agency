@@ -3,7 +3,6 @@
 import { createContext, useActionState, useContext, useId, useRef, useState } from "react";
 import Link from "next/link";
 import { AlertCircle, CheckCircle2, ImagePlus, Loader2, X } from "lucide-react";
-import { upload } from "@vercel/blob/client";
 import type { FormState } from "@/lib/admin";
 import { renderMarkdown } from "@/lib/markdown";
 import { buttonClasses } from "@/components/ui/button-styles";
@@ -273,25 +272,48 @@ export function CheckboxGroup({
   );
 }
 
-async function uploadImage(file: File): Promise<string> {
-  if (!file.type.startsWith("image/")) throw new Error("Please choose an image file.");
-  if (file.size > 8 * 1024 * 1024) throw new Error("Images must be 8MB or smaller.");
-  const safe = file.name.replace(/[^a-zA-Z0-9._-]/g, "_").slice(-80);
+const MAX_UPLOAD_BYTES = 4 * 1024 * 1024;
+const MAX_SIDE = 2000;
+
+/** Shrinks large photos in the browser so uploads stay fast and under the 4MB limit. */
+async function shrinkImage(file: File): Promise<File> {
+  if (file.type === "image/avif") return file;
+  let bitmap: ImageBitmap;
   try {
-    const blob = await upload(`content/${safe}`, file, {
-      access: "public",
-      handleUploadUrl: "/api/admin/upload",
-    });
-    return blob.url;
-  } catch (e) {
-    // The upload route answers 503 when no Blob store is connected to the project
-    if (e instanceof Error && /client token/i.test(e.message)) {
-      throw new Error(
-        "Image upload is not set up yet. Connect a Blob store in Vercel (Storage tab), or paste an image URL.",
-      );
-    }
-    throw e;
+    bitmap = await createImageBitmap(file);
+  } catch {
+    return file;
   }
+  const scale = Math.min(1, MAX_SIDE / Math.max(bitmap.width, bitmap.height));
+  if (scale === 1 && file.size <= 1.5 * 1024 * 1024) {
+    bitmap.close();
+    return file;
+  }
+  const canvas = document.createElement("canvas");
+  canvas.width = Math.round(bitmap.width * scale);
+  canvas.height = Math.round(bitmap.height * scale);
+  canvas.getContext("2d")?.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+  bitmap.close();
+  const type = file.type === "image/png" ? "image/png" : "image/webp";
+  const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, type, 0.85));
+  if (!blob || blob.size >= file.size) return file;
+  const name = file.name.replace(/\.[^.]+$/, "") + (type === "image/png" ? ".png" : ".webp");
+  return new File([blob], name, { type });
+}
+
+async function uploadImage(original: File): Promise<string> {
+  if (!original.type.startsWith("image/")) throw new Error("Please choose an image file.");
+  if (original.size > 20 * 1024 * 1024) throw new Error("Images must be 20MB or smaller.");
+  const file = await shrinkImage(original);
+  if (file.size > MAX_UPLOAD_BYTES) {
+    throw new Error("This image is still larger than 4MB after resizing. Please choose a smaller one.");
+  }
+  const body = new FormData();
+  body.append("file", file);
+  const res = await fetch("/api/admin/upload", { method: "POST", body });
+  const data = (await res.json().catch(() => ({}))) as { url?: string; error?: string };
+  if (!res.ok || !data.url) throw new Error(data.error ?? "Upload failed. Please try again.");
+  return data.url;
 }
 
 /** Single image: upload to Vercel Blob or paste a URL. */
