@@ -277,11 +277,21 @@ async function uploadImage(file: File): Promise<string> {
   if (!file.type.startsWith("image/")) throw new Error("Please choose an image file.");
   if (file.size > 8 * 1024 * 1024) throw new Error("Images must be 8MB or smaller.");
   const safe = file.name.replace(/[^a-zA-Z0-9._-]/g, "_").slice(-80);
-  const blob = await upload(`content/${safe}`, file, {
-    access: "public",
-    handleUploadUrl: "/api/admin/upload",
-  });
-  return blob.url;
+  try {
+    const blob = await upload(`content/${safe}`, file, {
+      access: "public",
+      handleUploadUrl: "/api/admin/upload",
+    });
+    return blob.url;
+  } catch (e) {
+    // The upload route answers 503 when no Blob store is connected to the project
+    if (e instanceof Error && /client token/i.test(e.message)) {
+      throw new Error(
+        "Image upload is not set up yet. Connect a Blob store in Vercel (Storage tab), or paste an image URL.",
+      );
+    }
+    throw e;
+  }
 }
 
 /** Single image: upload to Vercel Blob or paste a URL. */
