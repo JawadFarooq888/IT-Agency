@@ -4,6 +4,7 @@ import { db, isDbConfigured } from "./db";
 import { defaultCaseStudies, type CaseStudy } from "@/content/portfolio";
 import { defaultTestimonials, type TestimonialItem } from "@/content/testimonials";
 import { defaultFaqs, type FaqItem } from "@/content/faqs";
+import { defaultTeam, type TeamMember } from "@/content/about";
 import { defaultCategories, defaultPosts, type BlogCategory, type BlogPostView } from "@/content/blog";
 import type { PortfolioCategory, ServiceSlug } from "@/content/services";
 
@@ -126,5 +127,36 @@ export const getCategories = cache((): Promise<BlogCategory[]> =>
         select: { name: true, slug: true },
       }),
     defaultCategories,
+  ),
+);
+
+/** Splits admin text into paragraphs on blank lines. */
+function paragraphs(text: string | null): string[] | undefined {
+  const parts = (text ?? "")
+    .split(/\r?\n\s*\r?\n/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+  return parts.length ? parts : undefined;
+}
+
+export const getTeam = cache((): Promise<TeamMember[]> =>
+  withFallback(
+    "team",
+    async () => {
+      const rows = await db.teamMember.findMany({
+        where: { published: true },
+        orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],
+      });
+      return rows.map((r) => ({
+        name: r.name,
+        role: r.role,
+        photo: r.photo ?? undefined,
+        email: r.email ?? undefined,
+        phone: r.phone ?? undefined,
+        bio: paragraphs(r.bio),
+        featured: r.featured,
+      }));
+    },
+    defaultTeam,
   ),
 );

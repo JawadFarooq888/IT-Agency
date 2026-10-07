@@ -37,21 +37,36 @@ export const values: { title: string; text: string; icon: LucideIcon; tint: Tint
   },
 ];
 
-export type TeamMember = { name: string; role: string; photo?: string };
+/** A person on the About page. Edited in /admin/team once a database is connected. */
+export type TeamMember = {
+  name: string;
+  role: string;
+  photo?: string;
+  email?: string;
+  phone?: string;
+  /** Paragraphs, shown in the founder section */
+  bio?: string[];
+  /** The first featured member gets the big "Meet the founder" section */
+  featured?: boolean;
+};
 
 /** Founder section on the About page. Edit the message in your own words. */
-export const founder = {
+export const founder: TeamMember = {
   name: "Jawad Farooq",
   role: "Founder & CEO",
   photo: "/team/ceo.jpg",
-  message: [
+  email: "jawadbuu888@gmail.com",
+  phone: "+92 335 4427428",
+  featured: true,
+  bio: [
     "I started this company to give small businesses the same quality of software and digital marketing that big companies get, at a price that makes sense.",
     "Every project gets my personal attention: a clear plan, a fixed price and honest advice. If something will not help your business grow, I will tell you.",
   ],
 };
 
-export const team: TeamMember[] = [
-  { name: founder.name, role: founder.role, photo: founder.photo },
+/** Used when no database is connected. */
+export const defaultTeam: TeamMember[] = [
+  founder,
   { name: "[Team member]", role: "[UI/UX Designer]" },
   { name: "[Team member]", role: "[Mobile Developer]" },
   { name: "[Team member]", role: "[Marketing and SEO Lead]" },

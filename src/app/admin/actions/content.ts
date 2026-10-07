@@ -19,7 +19,7 @@ const optionalUrl = z.union([z.url("Enter a full URL starting with https://"), z
 const required = (label: string, max = 5000) =>
   z.string().trim().min(1, `${label} is required.`).max(max, `${label} is too long.`);
 
-type Entity = "portfolio" | "testimonial" | "faq" | "blog";
+type Entity = "portfolio" | "testimonial" | "faq" | "blog" | "team";
 
 // ---------- Reordering and deleting ----------
 
@@ -34,6 +34,8 @@ async function listOrder(entity: Entity): Promise<{ id: string }[]> {
       return db.faq.findMany({ orderBy, select: { id: true } });
     case "blog":
       return db.blogPost.findMany({ orderBy, select: { id: true } });
+    case "team":
+      return db.teamMember.findMany({ orderBy, select: { id: true } });
   }
 }
 
@@ -48,6 +50,8 @@ function setOrder(entity: Entity, id: string, sortOrder: number) {
       return db.faq.update(args);
     case "blog":
       return db.blogPost.update(args);
+    case "team":
+      return db.teamMember.update(args);
   }
 }
 
@@ -56,6 +60,7 @@ const adminPath: Record<Entity, string> = {
   testimonial: "/admin/testimonials",
   faq: "/admin/faqs",
   blog: "/admin/blog",
+  team: "/admin/team",
 };
 
 /** Moves an item one place up or down and renumbers the list. */
@@ -86,6 +91,9 @@ export async function deleteItem(entity: Entity, id: string): Promise<void> {
       break;
     case "blog":
       await db.blogPost.delete(where);
+      break;
+    case "team":
+      await db.teamMember.delete(where);
       break;
   }
   revalidateSite();
@@ -206,6 +214,61 @@ export async function saveTestimonial(
     await db.testimonial.create({ data: { ...parsed.data, sortOrder: await nextSortOrder("testimonial") } });
   revalidateSite();
   redirect("/admin/testimonials");
+}
+
+// ---------- Team ----------
+
+const teamSchema = z.object({
+  name: required("Name", 120),
+  role: required("Title", 120),
+  // A full URL, or a file in /public such as /team/ceo.jpg
+  photo: z.union([
+    z.url("Enter a full image URL, or upload an image."),
+    z.string().regex(/^\/[\w./-]+$/, "Enter a full image URL, or upload an image."),
+    z.literal(""),
+  ]),
+  email: z.union([z.email("Enter a valid email address.").max(200), z.literal("")]),
+  phone: z
+    .string()
+    .max(30, "Phone number is too long.")
+    .regex(/^([+\d][\d\s()-]*)?$/, "Use digits, spaces and an optional + only."),
+  bio: z.string().max(3000, "Keep the bio under 3000 characters."),
+  featured: z.boolean(),
+  published: z.boolean(),
+});
+
+export async function saveTeamMember(
+  id: string | null,
+  _prev: FormState,
+  formData: FormData,
+): Promise<FormState> {
+  await requireAdmin();
+  const parsed = teamSchema.safeParse({
+    name: str(formData.get("name")),
+    role: str(formData.get("role")),
+    photo: str(formData.get("photo")),
+    email: str(formData.get("email")),
+    phone: str(formData.get("phone")),
+    bio: str(formData.get("bio")),
+    featured: formData.get("featured") === "on",
+    published: formData.get("published") === "on",
+  });
+  if (!parsed.success)
+    return { error: "Please fix the highlighted fields.", fieldErrors: zodFieldErrors(parsed.error) };
+  const d = parsed.data;
+  const data = {
+    ...d,
+    photo: d.photo || null,
+    email: d.email.toLowerCase() || null,
+    phone: d.phone || null,
+    bio: d.bio || null,
+  };
+  // Only one person can have the big founder section
+  if (d.featured) await db.teamMember.updateMany({ where: { featured: true }, data: { featured: false } });
+  if (id) await db.teamMember.update({ where: { id }, data });
+  else await db.teamMember.create({ data: { ...data, sortOrder: await nextSortOrder("team") } });
+  revalidateSite();
+  redirect("/admin/team");
 }
 
 // ---------- FAQs ----------

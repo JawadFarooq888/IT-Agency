@@ -90,29 +90,29 @@ model RateLimitHit {
 // ---------- Content ----------
 
 model PortfolioItem {
-  id                String   @id @default(cuid())
-  slug              String   @unique
-  title             String
-  client            String
-  industry          String
-  country           String
-  category          String // web | mobile | ai | other
-  services          String[] // service slugs from src/content/services.ts
-  summary           String
-  problem           String
-  solution          String
-  result            String // one-line result shown on cards
-  results           String[]
-  tech              String[]
-  coverImage        String?
-  gallery           String[]
-  testimonialQuote  String?
-  testimonialName   String?
-  testimonialRole   String?
-  published         Boolean  @default(true)
-  sortOrder         Int      @default(0)
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  id               String   @id @default(cuid())
+  slug             String   @unique
+  title            String
+  client           String
+  industry         String
+  country          String
+  category         String // web | mobile | ai | other
+  services         String[] // service slugs from src/content/services.ts
+  summary          String
+  problem          String
+  solution         String
+  result           String // one-line result shown on cards
+  results          String[]
+  tech             String[]
+  coverImage       String?
+  gallery          String[]
+  testimonialQuote String?
+  testimonialName  String?
+  testimonialRole  String?
+  published        Boolean  @default(true)
+  sortOrder        Int      @default(0)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 
   @@index([published, sortOrder])
 }
@@ -124,6 +124,24 @@ model Testimonial {
   company   String
   country   String
   quote     String
+  published Boolean  @default(true)
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([published, sortOrder])
+}
+
+/// People shown on the About page. The first "featured" member gets the big founder section.
+model TeamMember {
+  id        String   @id @default(cuid())
+  name      String
+  role      String // job title, e.g. "Founder & CEO"
+  photo     String? // Vercel Blob URL or a path in /public
+  email     String?
+  phone     String?
+  bio       String? // paragraphs separated by a blank line
+  featured  Boolean  @default(false)
   published Boolean  @default(true)
   sortOrder Int      @default(0)
   createdAt DateTime @default(now())

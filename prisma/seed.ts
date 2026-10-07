@@ -13,6 +13,7 @@ import { defaultTestimonials } from "../src/content/testimonials";
 import { defaultCaseStudies } from "../src/content/portfolio";
 import { defaultCategories, defaultPosts } from "../src/content/blog";
 import { defaultSettings } from "../src/content/site";
+import { defaultTeam } from "../src/content/about";
 
 const db = new PrismaClient({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }) });
 
@@ -51,6 +52,23 @@ async function main() {
     console.log(`Seeded ${defaultFaqs.length} FAQs`);
   }
 
+  if ((await db.teamMember.count()) === 0) {
+    // Only real people: [placeholder] members stay in the code until you add real ones in /admin/team
+    const people = defaultTeam.filter((m) => !m.name.startsWith("["));
+    await db.teamMember.createMany({
+      data: people.map((m, i) => ({
+        name: m.name,
+        role: m.role,
+        photo: m.photo ?? null,
+        email: m.email ?? null,
+        phone: m.phone ?? null,
+        bio: m.bio?.join("\n\n") ?? null,
+        featured: m.featured ?? false,
+        sortOrder: i,
+      })),
+    });
+    console.log(`Seeded ${people.length} team members`);
+  }
   if ((await db.testimonial.count()) === 0) {
     await db.testimonial.createMany({ data: defaultTestimonials.map((t, i) => ({ ...t, sortOrder: i })) });
     console.log(`Seeded ${defaultTestimonials.length} testimonials`);
